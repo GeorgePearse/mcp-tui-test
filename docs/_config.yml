@@ -1,6 +1,6 @@
 title: MCP TUI Test
 description: Like Playwright, but for Terminal User Interfaces
-theme: just-the-docs
+remote_theme: just-the-docs/just-the-docs
 
 url: https://georgepearse.github.io
 baseurl: /mcp-tui-test
