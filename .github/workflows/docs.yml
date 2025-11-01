@@ -14,6 +14,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Required for git-revision-date-localized plugin
 
       - name: Configure Git Credentials
         run: |
@@ -28,13 +30,13 @@ jobs:
 
       - uses: actions/cache@v3
         with:
-          key: mkdocs-material-${{ env.cache_id }}
+          key: mkdocs-cinder-${{ env.cache_id }}
           path: .cache
           restore-keys: |
-            mkdocs-material-
+            mkdocs-cinder-
 
       - name: Install MkDocs and dependencies
-        run: pip install mkdocs-material mkdocs-minify-plugin
+        run: pip install -r docs-requirements.txt
 
       - name: Deploy to GitHub Pages
         run: mkdocs gh-deploy --force
