@@ -4,6 +4,8 @@
 
 An MCP (Model Context Protocol) server that enables AI assistants to test Terminal User Interface (TUI) applications. This server provides tools to launch, interact with, and verify TUI applications programmatically.
 
+📚 **[View Documentation](https://georgepearse.github.io/mcp-tui-test/)**
+
 ## Features
 
 - **Dual Testing Modes**: Choose between stream mode (for CLI tools) or buffer mode (for full TUIs with position awareness)
