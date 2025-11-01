@@ -1,0 +1,96 @@
+/* Indigo color scheme for Cinder theme */
+
+:root {
+  --indigo-primary: #3f51b5;
+  --indigo-light: #5c6bc0;
+  --indigo-dark: #303f9f;
+  --indigo-darker: #1a237e;
+}
+
+/* Primary navigation and header */
+.navbar-inverse {
+  background-color: var(--indigo-primary) !important;
+  border-color: var(--indigo-dark) !important;
+}
+
+.navbar-inverse .navbar-brand {
+  color: #ffffff !important;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+  color: #ffffff !important;
+}
+
+.navbar-inverse .navbar-nav > li > a:hover,
+.navbar-inverse .navbar-nav > li > a:focus {
+  background-color: var(--indigo-dark) !important;
+}
+
+.navbar-inverse .navbar-nav > .active > a,
+.navbar-inverse .navbar-nav > .active > a:hover,
+.navbar-inverse .navbar-nav > .active > a:focus {
+  background-color: var(--indigo-dark) !important;
+}
+
+/* Links */
+a {
+  color: var(--indigo-primary);
+}
+
+a:hover,
+a:focus {
+  color: var(--indigo-dark);
+}
+
+/* Sidebar navigation */
+.bs-sidenav .active > a,
+.bs-sidenav .active > a:hover,
+.bs-sidenav .active > a:focus {
+  border-left-color: var(--indigo-primary) !important;
+}
+
+/* Code blocks */
+code {
+  color: var(--indigo-dark);
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: var(--indigo-primary) !important;
+  border-color: var(--indigo-dark) !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: var(--indigo-dark) !important;
+  border-color: var(--indigo-darker) !important;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--indigo-darker);
+}
+
+/* Table of contents */
+.toc .active a {
+  color: var(--indigo-primary) !important;
+}
+
+/* Admonitions */
+.admonition.note {
+  border-left-color: var(--indigo-primary) !important;
+}
+
+.admonition.note .admonition-title {
+  background-color: var(--indigo-light) !important;
+}
+
+/* Search */
+.navbar-form .form-control:focus {
+  border-color: var(--indigo-light) !important;
+}
+
+/* Footer */
+.footer {
+  border-top-color: var(--indigo-light) !important;
+}

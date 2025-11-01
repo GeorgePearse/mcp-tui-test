@@ -8,6 +8,9 @@ repo_url: https://github.com/GeorgePearse/mcp-tui-test
 
 theme: cinder
 
+extra_css:
+  - stylesheets/custom.css
+
 plugins:
   - search
   - localsearch  # Makes search work locally
