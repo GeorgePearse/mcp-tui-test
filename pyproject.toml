@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mcp-tui-test"
+version = "0.1.0"
+description = "MCP server for testing Terminal User Interfaces - like Playwright for TUI applications"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "mcp>=1.0.0",
+    "pexpect>=4.9.0"
+]
+
+[project.urls]
+Homepage = "https://github.com/GeorgePearse/mcp-tui-test"
+Repository = "https://github.com/GeorgePearse/mcp-tui-test"
+
+[project.scripts]
+mcp-tui-test = "server:mcp.run"

@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "tui-test": {
+      "command": "python",
+      "args": [
+        "/absolute/path/to/mcp-tui-test/server.py"
+      ]
+    }
+  }
+}
