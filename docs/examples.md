@@ -1,9 +1,3 @@
----
-layout: default
-title: Examples
-nav_order: 2
----
-
 # TUI Testing Examples
 
 This document provides practical examples of using the MCP TUI Test server in both stream and buffer modes.

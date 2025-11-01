@@ -1,0 +1,72 @@
+site_name: MCP TUI Test
+site_description: Like Playwright, but for Terminal User Interfaces
+site_author: MCP TUI Test Contributors
+site_url: https://georgepearse.github.io/mcp-tui-test/
+
+repo_name: GeorgePearse/mcp-tui-test
+repo_url: https://github.com/GeorgePearse/mcp-tui-test
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  palette:
+    # Palette toggle for dark mode
+    - scheme: slate
+      primary: deep purple
+      accent: purple
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+    # Palette toggle for light mode
+    - scheme: default
+      primary: deep purple
+      accent: purple
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.code.annotate
+
+plugins:
+  - search
+  - minify:
+      minify_html: true
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.details
+  - admonition
+  - tables
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Examples: examples.md
+  - GitHub: https://github.com/GeorgePearse/mcp-tui-test
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/GeorgePearse/mcp-tui-test
+
+copyright: Copyright &copy; 2025 MCP TUI Test Contributors

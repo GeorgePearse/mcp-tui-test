@@ -1,19 +1,11 @@
----
-layout: default
-title: Home
-nav_order: 1
----
-
 # MCP TUI Test
 
 **Like Playwright, but for Terminal User Interfaces**
 
 An MCP (Model Context Protocol) server that enables AI assistants to test Terminal User Interface (TUI) applications. This server provides tools to launch, interact with, and verify TUI applications programmatically.
 
-[View on GitHub](https://github.com/GeorgePearse/mcp-tui-test){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
-[See Examples](examples.html){: .btn .fs-5 .mb-4 .mb-md-0 }
-
----
+[View on GitHub :fontawesome-brands-github:](https://github.com/GeorgePearse/mcp-tui-test){ .md-button .md-button--primary }
+[See Examples :material-file-document:](examples.md){ .md-button }
 
 ## Features
 

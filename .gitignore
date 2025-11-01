@@ -41,3 +41,7 @@ Thumbs.db
 .pytest_cache/
 .coverage
 htmlcov/
+
+# MkDocs
+site/
+.cache/
