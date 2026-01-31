@@ -9,6 +9,7 @@ Supports two modes:
 """
 
 import asyncio
+import codecs
 import pexpect
 import pyte
 import re
@@ -204,7 +205,9 @@ def send_keys(
             return f"✗ No active session found: {session_id}"
 
         session = sessions[session_id]
-        session.send(keys)
+        # Decode Python escape sequences (\x1b, \n, \t, etc.)
+        decoded_keys = codecs.decode(keys, 'unicode_escape')
+        session.send(decoded_keys)
 
         # Additional delay if requested
         if delay > 0.1:
