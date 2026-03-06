@@ -355,6 +355,11 @@ MIT License - see LICENSE file for details
 - [pexpect](https://pexpect.readthedocs.io/) - Python module for spawning child applications
 - [pyte](https://pyte.readthedocs.io/) - Python terminal emulator
 - [MCP](https://modelcontextprotocol.io/) - Model Context Protocol specification
+- [Agentic Manual Testing guide](https://simonwillison.net/guides/agentic-engineering-patterns/agentic-manual-testing/) - Related patterns and tools
+- [microsoft/playwright-cli](https://github.com/microsoft/playwright-cli) - Playwright-based MCP server for browser automation
+- [vercel-labs/agent-browser](https://github.com/vercel-labs/agent-browser) - Agent-oriented browser automation tooling
+- [simonw/rodney](https://github.com/simonw/rodney) - Chat with command line tools via MCP
+- [simonw/showboat](https://github.com/simonw/showboat) - Drive a browser via MCP from the terminal
 
 ## Author
 
