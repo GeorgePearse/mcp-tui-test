@@ -202,12 +202,16 @@
 <h3 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Python 3.10 or higher</li>
-<li>pip</li>
+<li><a href="https://docs.astral.sh/uv/">uv</a></li>
 </ul>
 <h3 id="install-dependencies">Install Dependencies<a class="headerlink" href="#install-dependencies" title="Permanent link">&para;</a></h3>
-<pre class="highlight"><code class="language-bash">pip install -r requirements.txt</code></pre>
+<pre class="highlight"><code class="language-bash">uv venv
+source .venv/bin/activate
+uv pip install -r requirements.txt</code></pre>
 <p>Or install the package:</p>
-<pre class="highlight"><code class="language-bash">pip install -e .</code></pre>
+<pre class="highlight"><code class="language-bash">uv venv
+source .venv/bin/activate
+uv pip install -e .</code></pre>
 <h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
 <h3 id="running-the-mcp-server">Running the MCP Server<a class="headerlink" href="#running-the-mcp-server" title="Permanent link">&para;</a></h3>
 <pre class="highlight"><code class="language-bash">python server.py</code></pre>
@@ -517,5 +521,5 @@ capture_screen()</code></pre></p>
 
 <!--
 MkDocs version : 1.6.1
-Build Date UTC : 2026-03-06 22:19:44.038923+00:00
+Build Date UTC : 2026-03-06 22:26:20.649830+00:00
 -->
