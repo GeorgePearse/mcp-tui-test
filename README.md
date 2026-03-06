@@ -41,18 +41,22 @@ An MCP (Model Context Protocol) server that enables AI assistants to test Termin
 ### Prerequisites
 
 - Python 3.10 or higher
-- pip
+- [uv](https://docs.astral.sh/uv/)
 
 ### Install Dependencies
 
 ```bash
-pip install -r requirements.txt
+uv venv
+source .venv/bin/activate
+uv pip install -r requirements.txt
 ```
 
 Or install the package:
 
 ```bash
-pip install -e .
+uv venv
+source .venv/bin/activate
+uv pip install -e .
 ```
 
 ## Usage
