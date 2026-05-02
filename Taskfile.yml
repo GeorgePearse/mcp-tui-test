@@ -1,0 +1,82 @@
+version: "3"
+
+# Useful operations for the mcp-tui-test Docker container.
+# Run `task --list` to see available tasks.
+
+vars:
+  IMAGE: mcp-tui-test
+  TAG: latest
+  CONTAINER: mcp-tui-test
+
+tasks:
+  default:
+    desc: List available tasks
+    cmds:
+      - task --list
+
+  docker:build:
+    desc: Build the Docker image
+    cmds:
+      - docker build -t {{.IMAGE}}:{{.TAG}} .
+
+  docker:rebuild:
+    desc: Build the Docker image without cache
+    cmds:
+      - docker build --no-cache -t {{.IMAGE}}:{{.TAG}} .
+
+  docker:run:
+    desc: Run the MCP server in the foreground (stdio attached) — use this for MCP clients
+    deps: [docker:build]
+    cmds:
+      - docker run --rm -i --name {{.CONTAINER}} {{.IMAGE}}:{{.TAG}}
+
+  docker:start:
+    desc: Start the container detached (keeps stdin open so the MCP server stays alive)
+    deps: [docker:build]
+    cmds:
+      - docker rm -f {{.CONTAINER}} 2>/dev/null || true
+      - docker run -d -i --name {{.CONTAINER}} {{.IMAGE}}:{{.TAG}}
+      - echo "Started {{.CONTAINER}}. Attach with 'task docker:attach' or view logs with 'task docker:logs'."
+
+  docker:stop:
+    desc: Stop the running container gracefully
+    cmds:
+      - docker stop {{.CONTAINER}} 2>/dev/null || true
+
+  docker:kill:
+    desc: Force-kill and remove the running container
+    cmds:
+      - docker kill {{.CONTAINER}} 2>/dev/null || true
+      - docker rm -f {{.CONTAINER}} 2>/dev/null || true
+
+  docker:restart:
+    desc: Restart the container
+    cmds:
+      - task: docker:kill
+      - task: docker:start
+
+  docker:logs:
+    desc: Tail container logs
+    cmds:
+      - docker logs -f {{.CONTAINER}}
+
+  docker:attach:
+    desc: Attach to the running container's stdio (Ctrl+P Ctrl+Q to detach)
+    cmds:
+      - docker attach {{.CONTAINER}}
+
+  docker:shell:
+    desc: Open a bash shell inside the running container
+    cmds:
+      - docker exec -it {{.CONTAINER}} /bin/bash
+
+  docker:status:
+    desc: Show container status
+    cmds:
+      - docker ps -a --filter name={{.CONTAINER}}
+
+  docker:clean:
+    desc: Remove the container and the image
+    cmds:
+      - docker rm -f {{.CONTAINER}} 2>/dev/null || true
+      - docker rmi {{.IMAGE}}:{{.TAG}} 2>/dev/null || true
