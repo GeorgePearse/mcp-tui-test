@@ -59,6 +59,22 @@ source .venv/bin/activate
 uv pip install -e .
 ```
 
+### Run with Docker
+
+Build the image:
+
+```bash
+docker build -t mcp-tui-test:latest .
+```
+
+Run the server (stdio is the MCP transport, so use `-i` and skip `-d`):
+
+```bash
+docker run --rm -i mcp-tui-test:latest
+```
+
+The published image (if you prefer not to build locally) can also be pulled from GHCR once tagged: `ghcr.io/georgepearse/mcp-tui-test:latest`.
+
 ## Usage
 
 ### Running the MCP Server
@@ -99,6 +115,86 @@ Or if installed as a package:
   }
 }
 ```
+
+Or via Docker:
+
+```json
+{
+  "mcpServers": {
+    "tui-test": {
+      "command": "docker",
+      "args": ["run", "--rm", "-i", "mcp-tui-test:latest"]
+    }
+  }
+}
+```
+
+### Configure in opencode
+
+opencode reads MCP servers from `~/.config/opencode/opencode.jsonc` (or your project-local `opencode.jsonc`). Add an entry under `mcp`:
+
+Run from PyPI/Git via `uvx`:
+
+```jsonc
+{
+  "mcp": {
+    "mcp-tui-test": {
+      "type": "local",
+      "command": [
+        "uvx",
+        "git+https://github.com/GeorgePearse/mcp-tui-test.git"
+      ],
+      "enabled": true
+    }
+  }
+}
+```
+
+Run via Docker (each invocation spins up a fresh container over stdio):
+
+```jsonc
+{
+  "mcp": {
+    "mcp-tui-test": {
+      "type": "local",
+      "command": ["docker", "run", "--rm", "-i", "mcp-tui-test:latest"],
+      "enabled": true
+    }
+  }
+}
+```
+
+### Configure in Cursor
+
+Add to `~/.cursor/mcp.json` (global) or `.cursor/mcp.json` in your project:
+
+```json
+{
+  "mcpServers": {
+    "tui-test": {
+      "command": "uvx",
+      "args": ["git+https://github.com/GeorgePearse/mcp-tui-test.git"]
+    }
+  }
+}
+```
+
+Or via Docker:
+
+```json
+{
+  "mcpServers": {
+    "tui-test": {
+      "command": "docker",
+      "args": ["run", "--rm", "-i", "mcp-tui-test:latest"]
+    }
+  }
+}
+```
+
+### Configure in Continue / Cline / Zed
+
+Most MCP-aware clients accept the same `command` + `args` shape shown above. Use either the `uvx` form (no local checkout needed) or the `docker run --rm -i mcp-tui-test:latest` form (after building the image once).
 
 ## Available Tools
 
