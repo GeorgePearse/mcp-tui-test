@@ -13,7 +13,6 @@ import codecs
 import pexpect
 import pyte
 import re
-import time
 from typing import Optional, Dict, Any, Tuple
 from mcp.server.fastmcp import FastMCP
 
@@ -62,19 +61,23 @@ class ScreenSession:
             return
 
         try:
-            # Read available output without blocking
-            output = self.process.read_nonblocking(size=8192, timeout=0.1)
-            if output:
+            # Drain ALL currently-buffered output so pyte renders the latest
+            # complete frame. A single read only advances the buffer by one
+            # chunk, which desyncs on animated TUIs that emit faster than that.
+            while True:
+                output = self.process.read_nonblocking(size=8192, timeout=0)
+                if not output:
+                    break
                 self.stream.feed(output)
         except pexpect.TIMEOUT:
-            pass  # No new output, that's fine
+            pass  # Caught up to the pty buffer, that's fine
         except pexpect.EOF:
             pass  # Process ended
 
-    def send(self, keys: str):
+    async def send(self, keys: str):
         """Send keys to the process."""
         self.process.send(keys)
-        time.sleep(0.1)
+        await asyncio.sleep(0.1)
         if self.mode == "buffer":
             self._update_buffer()
 
@@ -132,7 +135,7 @@ sessions: Dict[str, ScreenSession] = {}
 
 
 @mcp.tool()
-def launch_tui(
+async def launch_tui(
     command: str,
     session_id: str = "default",
     timeout: int = 30,
@@ -175,7 +178,7 @@ def launch_tui(
         sessions[session_id] = session
 
         # Give it a moment to initialize
-        time.sleep(0.5)
+        await asyncio.sleep(0.5)
 
         return f"✓ Launched TUI application (session: {session_id})\nCommand: {command}\nDimensions: {width}x{height}\nMode: {mode}"
 
@@ -184,7 +187,7 @@ def launch_tui(
 
 
 @mcp.tool()
-def send_keys(
+async def send_keys(
     keys: str,
     session_id: str = "default",
     delay: float = 0.1
@@ -207,11 +210,11 @@ def send_keys(
         session = sessions[session_id]
         # Decode Python escape sequences (\x1b, \n, \t, etc.)
         decoded_keys = codecs.decode(keys, 'unicode_escape')
-        session.send(decoded_keys)
+        await session.send(decoded_keys)
 
         # Additional delay if requested
         if delay > 0.1:
-            time.sleep(delay - 0.1)
+            await asyncio.sleep(delay - 0.1)
 
         return f"✓ Sent keys to session {session_id}"
 
@@ -260,7 +263,7 @@ def capture_screen(
 
 
 @mcp.tool()
-def expect_text(
+async def expect_text(
     pattern: str,
     session_id: str = "default",
     timeout: int = 10
@@ -281,10 +284,17 @@ def expect_text(
             return f"✗ No active session found: {session_id}"
 
         session = sessions[session_id]
-        session.process.timeout = timeout
 
-        # Wait for the pattern
-        index = session.process.expect([pattern, pexpect.TIMEOUT, pexpect.EOF])
+        # Wait for the pattern in a worker thread so the event loop stays
+        # responsive; restore the original timeout afterwards.
+        previous_timeout = session.process.timeout
+        session.process.timeout = timeout
+        try:
+            index = await asyncio.to_thread(
+                session.process.expect, [pattern, pexpect.TIMEOUT, pexpect.EOF]
+            )
+        finally:
+            session.process.timeout = previous_timeout
 
         # Update buffer if in buffer mode
         if session.mode == "buffer":
@@ -535,7 +545,7 @@ def list_sessions() -> str:
 
 
 @mcp.tool()
-def send_ctrl(
+async def send_ctrl(
     key: str,
     session_id: str = "default"
 ) -> str:
@@ -557,7 +567,7 @@ def send_ctrl(
 
         # Convert key to control character
         ctrl_char = chr(ord(key.lower()) - ord('a') + 1)
-        session.send(ctrl_char)
+        await session.send(ctrl_char)
 
         return f"✓ Sent Ctrl+{key.upper()} to session {session_id}"
 
