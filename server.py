@@ -125,6 +125,57 @@ class ScreenSession:
             return char.data if char else " "
         return ""
 
+    def get_highlighted_regions(self, bg: Optional[str] = None):
+        """
+        Find runs of cells whose background marks them as highlighted/selected.
+
+        Returns a list of (row, col_start, col_end, bg, text) tuples, or None
+        if the session is not in buffer mode. When bg is None, the most common
+        background is treated as "normal" (along with unwritten cells) and any
+        other background is reported; when bg is given, only that exact
+        background color is matched.
+        """
+        if self.mode != "buffer":
+            return None
+
+        self._update_buffer()
+        screen = self.screen
+
+        if bg is None:
+            # Most common background among written cells is the normal one.
+            counts: Dict[str, int] = {}
+            for y in range(screen.lines):
+                for char in screen.buffer[y].values():
+                    counts[char.bg] = counts.get(char.bg, 0) + 1
+            normal = max(counts, key=lambda c: counts[c]) if counts else "default"
+            # Unwritten cells report "default"; never treat those as highlights.
+            normals = {normal, "default"}
+            matches = lambda color: color not in normals
+        else:
+            matches = lambda color: color == bg
+
+        regions = []
+        for y in range(screen.lines):
+            row = screen.buffer[y]
+            x = 0
+            while x < screen.columns:
+                char = row.get(x)
+                color = char.bg if char else "default"
+                if not matches(color):
+                    x += 1
+                    continue
+                # Extend the run while the background stays the same color.
+                start = x
+                text = []
+                while x < screen.columns:
+                    ch = row.get(x)
+                    if (ch.bg if ch else "default") != color:
+                        break
+                    text.append(ch.data if ch else " ")
+                    x += 1
+                regions.append((y, start, x - 1, color, "".join(text)))
+        return regions
+
     def close(self):
         """Close the session."""
         self.process.close()
@@ -552,6 +603,53 @@ def get_line(
 
     except Exception as e:
         return f"✗ Failed to get line: {str(e)}"
+
+
+@mcp.tool()
+def find_highlighted(
+    session_id: str = "default",
+    bg: Optional[str] = None
+) -> str:
+    """
+    Find highlighted/selected regions on the current screen (buffer mode only).
+
+    TUIs usually mark the selected item with a background color rather than
+    reverse video, and buffer captures return plain text that hides it. This
+    scans the screen buffer for runs of cells whose background differs from the
+    normal background, so you can verify which item is currently selected.
+
+    Args:
+        session_id: Session identifier (default: "default")
+        bg: Match only this background color (pyte value, e.g. a hex string like
+            "264f78" or a named color). If omitted, the most common background
+            is treated as normal and any other background is reported.
+
+    Returns:
+        The highlighted regions as row, column range, background color, and text
+    """
+    try:
+        if session_id not in sessions:
+            return f"✗ No active session found: {session_id}"
+
+        session = sessions[session_id]
+
+        if session.mode != "buffer":
+            return f"✗ Buffer mode required for find_highlighted. Session '{session_id}' is in stream mode."
+
+        regions = session.get_highlighted_regions(bg=bg)
+        if not regions:
+            criteria = f" with bg '{bg}'" if bg else ""
+            return f"No highlighted regions found{criteria} (session: {session_id})"
+
+        lines = [
+            f"row {row}, cols {start}-{end} (bg {color}): {text.rstrip()!r}"
+            for row, start, end, color, text in regions
+        ]
+        body = "\n".join(lines)
+        return f"Highlighted regions (session: {session_id}, {len(regions)} found):\n{'='*60}\n{body}\n{'='*60}"
+
+    except Exception as e:
+        return f"✗ Failed to find highlighted regions: {str(e)}"
 
 
 @mcp.tool()

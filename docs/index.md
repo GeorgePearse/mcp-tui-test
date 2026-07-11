@@ -266,6 +266,24 @@ get_line(row=3, session_id="test1")
 # Returns: "Line 3 (session: test1): [line content]"
 ```
 
+### `find_highlighted` (Buffer Mode Only)
+Find highlighted/selected regions on the current screen. Many TUIs mark the
+selected item with a background color (not reverse video), which plain-text
+captures hide. This reports runs of cells whose background differs from the
+normal background, so you can verify which item is selected.
+
+**Parameters:**
+- `session_id` (optional): Session identifier (default: "default")
+- `bg` (optional): Match only this background color (pyte value, e.g. a hex
+  string like `"264f78"`). If omitted, auto-detects the normal background and
+  reports any other background.
+
+**Example:**
+```python
+find_highlighted(session_id="test1", bg="264f78")
+# Returns the selected row(s): "row 7, cols 56-93 (bg 264f78): '  Switch Integration'"
+```
+
 ### `close_session`
 Close a TUI testing session.
 

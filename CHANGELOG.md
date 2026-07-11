@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`wait_for_text()`**: Wait for text on the *current* screen buffer (buffer
   mode), polling the live grid. Complements `expect_text()`, which matches the
   output stream including text that has scrolled off.
+- **`find_highlighted()`**: Report highlighted/selected regions on the current
+  screen (buffer mode) by background color, so tests can verify which item is
+  selected in TUIs that highlight via background color instead of reverse video.
 
 ### Fixed
 - **Buffer desync on animated TUIs**: `_update_buffer()` now drains all pending
