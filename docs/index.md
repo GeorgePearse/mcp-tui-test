@@ -164,7 +164,9 @@ capture_screen(session_id="test1", use_buffer=True)
 ```
 
 ### `expect_text`
-Wait for specific text to appear in the TUI output.
+Wait for specific text to appear in the TUI output stream. This matches the
+accumulated stream, including text that has already scrolled off screen. To
+wait for text on the *current* screen, use `wait_for_text`.
 
 **Parameters:**
 - `pattern` (required): Text or regex pattern to wait for
@@ -174,6 +176,22 @@ Wait for specific text to appear in the TUI output.
 **Example:**
 ```python
 expect_text(pattern="Welcome", session_id="test1", timeout=5)
+```
+
+### `wait_for_text`
+Wait for text to appear on the current screen buffer (buffer mode only). Unlike
+`expect_text`, this polls the live screen grid, so it answers "is this visible
+on screen right now?" Useful for animated TUIs that repaint asynchronously.
+
+**Parameters:**
+- `text` (required): Text to wait for on the current screen
+- `session_id` (optional): Session identifier (default: "default")
+- `timeout` (optional): Maximum time to wait in seconds (default: 10.0)
+- `poll_interval` (optional): Seconds between screen checks (default: 0.2)
+
+**Example:**
+```python
+wait_for_text(text="Overview", session_id="test1", timeout=10)
 ```
 
 ### `assert_contains`

@@ -269,7 +269,11 @@ async def expect_text(
     timeout: int = 10
 ) -> str:
     """
-    Wait for specific text to appear in the TUI output.
+    Wait for specific text to appear in the TUI output STREAM.
+
+    This matches the accumulated output stream, which includes text that has
+    already scrolled off screen. To check what is visible on the current
+    screen right now (buffer mode), use wait_for_text instead.
 
     Args:
         pattern: Text or regex pattern to wait for
@@ -309,6 +313,54 @@ async def expect_text(
 
     except Exception as e:
         return f"✗ Failed to expect text: {str(e)}"
+
+
+@mcp.tool()
+async def wait_for_text(
+    text: str,
+    session_id: str = "default",
+    timeout: float = 10.0,
+    poll_interval: float = 0.2
+) -> str:
+    """
+    Wait for text to appear on the CURRENT screen buffer (buffer mode only).
+
+    Unlike expect_text, which matches the accumulated output stream (including
+    text that has scrolled off), this polls the live screen grid, so it answers
+    "is this visible on screen right now?". Useful for animated TUIs where the
+    screen repaints asynchronously after a keypress.
+
+    Args:
+        text: Text to wait for on the current screen
+        session_id: Session identifier (default: "default")
+        timeout: Maximum time to wait in seconds (default: 10.0)
+        poll_interval: Seconds between screen checks (default: 0.2)
+
+    Returns:
+        Status message indicating if text became visible on screen
+    """
+    try:
+        if session_id not in sessions:
+            return f"✗ No active session found: {session_id}"
+
+        session = sessions[session_id]
+
+        if session.mode != "buffer":
+            return f"✗ Buffer mode required for wait_for_text. Session '{session_id}' is in stream mode; use expect_text instead."
+
+        # Poll the live grid until the text shows up or we run out of time.
+        loop = asyncio.get_event_loop()
+        deadline = loop.time() + timeout
+        while True:
+            # get_buffer_display drains pending output before rendering
+            if text in session.get_buffer_display():
+                return f"✓ Found '{text}' on screen (session: {session_id})"
+            if loop.time() >= deadline:
+                return f"✗ Timeout: '{text}' did not appear on screen within {timeout}s"
+            await asyncio.sleep(poll_interval)
+
+    except Exception as e:
+        return f"✗ Failed to wait for text: {str(e)}"
 
 
 @mcp.tool()

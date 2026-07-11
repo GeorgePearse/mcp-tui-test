@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+- **`wait_for_text()`**: Wait for text on the *current* screen buffer (buffer
+  mode), polling the live grid. Complements `expect_text()`, which matches the
+  output stream including text that has scrolled off.
+
+### Fixed
+- **Buffer desync on animated TUIs**: `_update_buffer()` now drains all pending
+  output instead of a single 8192-byte read, so the screen buffer renders the
+  latest complete frame instead of stale/partial fragments.
+- **Event-loop lag**: `launch_tui()`, `send_keys()`, and `send_ctrl()` are now
+  async and use `asyncio.sleep()`, so waits no longer block the FastMCP event
+  loop and stall the transport.
+- **`expect_text()` timeout leak**: it no longer permanently overwrites the
+  session process timeout, and runs the blocking wait off the event loop.
+
 ## [0.2.0] - 2025-01-11
 
 ### Added
