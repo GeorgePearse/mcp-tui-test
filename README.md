@@ -75,13 +75,13 @@ mcp-tui-test
 
 ### Configure in Claude Desktop
 
-Add this to your `claude_desktop_config.json`:
+Add this to your `claude_desktop_config.json`. Use the full path to the venv's Python interpreter, since Claude Desktop doesn't activate your shell environment:
 
 ```json
 {
   "mcpServers": {
     "tui-test": {
-      "command": "python",
+      "command": "/path/to/mcp-tui-test/.venv/bin/python",
       "args": ["/path/to/mcp-tui-test/server.py"]
     }
   }
@@ -97,6 +97,30 @@ Or if installed as a package:
       "command": "mcp-tui-test"
     }
   }
+}
+```
+
+### Configure in Claude Code (project-scoped)
+
+For a project-scoped server, add a `.mcp.json` file to the root of the project you want to test from:
+
+```json
+{
+  "mcpServers": {
+    "tui-test": {
+      "command": "/path/to/mcp-tui-test/.venv/bin/python",
+      "args": ["/path/to/mcp-tui-test/server.py"],
+      "cwd": "/path/to/mcp-tui-test"
+    }
+  }
+}
+```
+
+Claude Code will prompt to approve project-scoped servers found in `.mcp.json` before using them. To approve it non-interactively (e.g. for CI or a shared repo), add it to `.claude/settings.local.json`:
+
+```json
+{
+  "enabledMcpjsonServers": ["tui-test"]
 }
 ```
 
