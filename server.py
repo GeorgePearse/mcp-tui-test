@@ -13,7 +13,7 @@ import codecs
 import pexpect
 import pyte
 import re
-from typing import Optional, Dict, Any, Tuple
+from typing import Optional, Dict, Tuple
 from mcp.server.fastmcp import FastMCP
 
 # Initialize FastMCP server
@@ -150,9 +150,11 @@ class ScreenSession:
             normal = max(counts, key=lambda c: counts[c]) if counts else "default"
             # Unwritten cells report "default"; never treat those as highlights.
             normals = {normal, "default"}
-            matches = lambda color: color not in normals
+            def matches(color_):
+                return color_ not in normals
         else:
-            matches = lambda color: color == bg
+            def matches(color_):
+                return color_ == bg
 
         regions = []
         for y in range(screen.lines):
@@ -323,7 +325,7 @@ async def expect_text(
     Wait for specific text to appear in the TUI output STREAM.
 
     This matches the accumulated output stream, which includes text that has
-    already scrolled off screen. To check what is visible on the current
+    already scrolled offscreen. To check what is visible on the current
     screen right now (buffer mode), use wait_for_text instead.
 
     Args:
@@ -399,7 +401,7 @@ async def wait_for_text(
         if session.mode != "buffer":
             return f"✗ Buffer mode required for wait_for_text. Session '{session_id}' is in stream mode; use expect_text instead."
 
-        # Poll the live grid until the text shows up or we run out of time.
+        # Poll the live grid until the text shows up, or we run out of time.
         loop = asyncio.get_event_loop()
         deadline = loop.time() + timeout
         while True:
