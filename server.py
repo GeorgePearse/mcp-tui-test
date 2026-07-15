@@ -10,9 +10,11 @@ Supports two modes:
 
 import asyncio
 import codecs
+import os
 import pexpect
 import pyte
 import re
+import signal
 from typing import Optional, Dict, Tuple
 from mcp.server.fastmcp import FastMCP
 
@@ -35,18 +37,25 @@ class ScreenSession:
         dimensions: (width, height) tuple
     """
 
-    def __init__(self, command: str, timeout: int, dimensions: Tuple[int, int], mode: str = "stream"):
+    def __init__(self, command: str, timeout: int, dimensions: Tuple[int, int], mode: str = "stream",
+                 cwd: Optional[str] = None, env: Optional[Dict[str, str]] = None):
         self.mode = mode
         self.dimensions = dimensions
         width, height = dimensions
 
+        # Build spawn keyword arguments
+        spawn_kwargs: Dict[str, object] = {
+            "timeout": timeout,
+            "dimensions": (height, width),
+            "encoding": "utf-8",
+        }
+        if cwd is not None:
+            spawn_kwargs["cwd"] = cwd
+        if env is not None:
+            spawn_kwargs["env"] = env
+
         # Launch process with pexpect
-        self.process = pexpect.spawn(
-            command,
-            timeout=timeout,
-            dimensions=(height, width),
-            encoding='utf-8'
-        )
+        self.process = pexpect.spawn(command, **spawn_kwargs)
 
         # Initialize pyte screen buffer if in buffer mode
         if mode == "buffer":
@@ -193,7 +202,9 @@ async def launch_tui(
     session_id: str = "default",
     timeout: int = 30,
     dimensions: Optional[str] = "80x24",
-    mode: str = "stream"
+    mode: str = "stream",
+    cwd: Optional[str] = None,
+    env: Optional[str] = None
 ) -> str:
     """
     Launch a TUI application for testing.
@@ -204,6 +215,8 @@ async def launch_tui(
         timeout: Command timeout in seconds (default: 30)
         dimensions: Terminal dimensions as WIDTHxHEIGHT (default: "80x24")
         mode: Testing mode - "stream" for CLI tools, "buffer" for full TUIs (default: "stream")
+        cwd: Working directory for the spawned process (default: None, inherits current)
+        env: Comma-separated KEY=VALUE pairs merged with the current environment (default: None)
 
     Returns:
         Status message with session ID
@@ -215,6 +228,17 @@ async def launch_tui(
         else:
             width, height = 80, 24
 
+        # Parse environment variables
+        merged_env: Optional[Dict[str, str]] = None
+        if env is not None:
+            merged_env = os.environ.copy()
+            for pair in env.split(","):
+                pair = pair.strip()
+                if "=" not in pair:
+                    return f"✗ Invalid env format: '{pair}'. Expected KEY=VALUE"
+                key, value = pair.split("=", 1)
+                merged_env[key.strip()] = value.strip()
+
         # Close existing session if it exists
         if session_id in sessions:
             sessions[session_id].close()
@@ -225,7 +249,9 @@ async def launch_tui(
             command=command,
             timeout=timeout,
             dimensions=(width, height),
-            mode=mode
+            mode=mode,
+            cwd=cwd,
+            env=merged_env
         )
 
         sessions[session_id] = session
@@ -233,7 +259,12 @@ async def launch_tui(
         # Give it a moment to initialize
         await asyncio.sleep(0.5)
 
-        return f"✓ Launched TUI application (session: {session_id})\nCommand: {command}\nDimensions: {width}x{height}\nMode: {mode}"
+        status = f"✓ Launched TUI application (session: {session_id})\nCommand: {command}\nDimensions: {width}x{height}\nMode: {mode}"
+        if cwd:
+            status += f"\nWorking directory: {cwd}"
+        if env:
+            status += f"\nExtra env vars: {env}"
+        return status
 
     except Exception as e:
         return f"✗ Failed to launch TUI: {str(e)}"
@@ -402,7 +433,7 @@ async def wait_for_text(
             return f"✗ Buffer mode required for wait_for_text. Session '{session_id}' is in stream mode; use expect_text instead."
 
         # Poll the live grid until the text shows up, or we run out of time.
-        loop = asyncio.get_event_loop()
+        loop = asyncio.get_running_loop()
         deadline = loop.time() + timeout
         while True:
             # get_buffer_display drains pending output before rendering
@@ -652,6 +683,85 @@ def find_highlighted(
 
     except Exception as e:
         return f"✗ Failed to find highlighted regions: {str(e)}"
+
+
+@mcp.tool()
+def get_exit_status(session_id: str = "default") -> str:
+    """
+    Check the exit status of a TUI process.
+
+    Returns whether the process is still running, and if it has exited,
+    reports the exit code or signal that terminated it.
+
+    Args:
+        session_id: Session identifier (default: "default")
+
+    Returns:
+        Process status message with exit code or running state
+    """
+    try:
+        if session_id not in sessions:
+            return f"✗ No active session found: {session_id}"
+
+        session = sessions[session_id]
+
+        if session.process.isalive():
+            return f"✗ Process still running (session: {session_id})"
+
+        if session.process.exitstatus is not None:
+            return f"Exit status (session: {session_id}): {session.process.exitstatus}"
+
+        if session.process.signalstatus is not None:
+            return f"Exit status (session: {session_id}): killed by signal {session.process.signalstatus}"
+
+        return f"Exit status (session: {session_id}): unknown"
+
+    except Exception as e:
+        return f"✗ Failed to get exit status: {str(e)}"
+
+
+@mcp.tool()
+def send_signal(signal_name: str, session_id: str = "default") -> str:
+    """
+    Send a signal to the TUI process.
+
+    Accepts standard signal names such as SIGTERM, SIGKILL, SIGHUP, SIGINT,
+    SIGUSR1, SIGUSR2, etc.
+
+    Args:
+        signal_name: Signal name (e.g., "SIGTERM", "SIGKILL", "SIGHUP", "SIGUSR1")
+        session_id: Session identifier (default: "default")
+
+    Returns:
+        Status message confirming the signal was sent
+    """
+    try:
+        if session_id not in sessions:
+            return f"✗ No active session found: {session_id}"
+
+        session = sessions[session_id]
+
+        # Normalize signal name: accept with or without SIG prefix
+        name = signal_name.upper()
+        if not name.startswith("SIG"):
+            name = "SIG" + name
+
+        # Resolve the signal name to a signal number
+        try:
+            sig = getattr(signal.Signals, name)
+        except AttributeError:
+            valid = ", ".join(sorted(s.name for s in signal.Signals))
+            return f"✗ Unknown signal: '{signal_name}'. Valid signals: {valid}"
+
+        if not session.process.isalive():
+            return f"✗ Process is not running (session: {session_id})"
+
+        os.kill(session.process.pid, sig)
+
+        return f"✓ Sent {name} to session {session_id}"
+
+    except Exception as e:
+        return f"✗ Failed to send signal: {str(e)}"
 
 
 @mcp.tool()

@@ -135,6 +135,8 @@ Launch a TUI application for testing.
 - `timeout` (optional): Command timeout in seconds (default: 30)
 - `dimensions` (optional): Terminal dimensions as WIDTHxHEIGHT (default: "80x24")
 - `mode` (optional): Testing mode - "stream" or "buffer" (default: "stream")
+- `cwd` (optional): Working directory for the spawned process (default: inherits current)
+- `env` (optional): Comma-separated KEY=VALUE pairs merged with the current environment (default: None)
 
 **Examples:**
 ```python
@@ -143,6 +145,12 @@ launch_tui(command="python example_tui_app.py", session_id="test1")
 
 # Buffer mode for full TUI applications
 launch_tui(command="htop", session_id="test2", mode="buffer", dimensions="120x40")
+
+# Launch with a custom working directory
+launch_tui(command="./my_app", session_id="test3", cwd="/home/user/project")
+
+# Launch with extra environment variables
+launch_tui(command="python app.py", session_id="test4", env="DEBUG=1,TERM=xterm-256color")
 ```
 
 ### `send_keys`
@@ -306,6 +314,36 @@ normal background, so you can verify which item is selected.
 ```python
 find_highlighted(session_id="test1", bg="264f78")
 # Returns the selected row(s): "row 7, cols 56-93 (bg 264f78): '  Switch Integration'"
+```
+
+### `get_exit_status`
+Check the exit status of a TUI process. Returns whether the process is still
+running, and if it has exited, reports the exit code or the signal that
+terminated it.
+
+**Parameters:**
+- `session_id` (optional): Session identifier (default: "default")
+
+**Example:**
+```python
+get_exit_status(session_id="test1")
+# Returns: "Exit status (session: test1): 0"
+# Or: "✗ Process still running (session: test1)"
+```
+
+### `send_signal`
+Send a signal to the TUI process. Accepts standard signal names such as
+SIGTERM, SIGKILL, SIGHUP, SIGINT, SIGUSR1, SIGUSR2, etc. The `SIG` prefix
+is optional.
+
+**Parameters:**
+- `signal_name` (required): Signal name (e.g., "SIGTERM", "SIGKILL", "TERM")
+- `session_id` (optional): Session identifier (default: "default")
+
+**Example:**
+```python
+send_signal(signal_name="SIGTERM", session_id="test1")
+# Returns: "✓ Sent SIGTERM to session test1"
 ```
 
 ### `close_session`
