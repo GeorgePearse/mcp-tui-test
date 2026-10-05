@@ -18,3 +18,13 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - run: uv venv && uv pip install -e ".[dev]"
       - run: uv run pytest -v
+
+  test-go:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.23"
+          cache-dependency-path: go/go.sum
+      - run: cd go && go vet ./... && go test ./...

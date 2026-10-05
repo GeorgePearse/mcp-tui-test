@@ -59,6 +59,29 @@ source .venv/bin/activate
 uv pip install -e ".[dev]"
 ```
 
+## Go implementation
+
+A sibling Go implementation lives in [`go/`](go/) — the **same tool contract**
+(same tool names, same structured result shapes, same `tui://{session_id}/screen`
+resource), as a single static binary with zero runtime dependencies:
+
+```bash
+go install github.com/GeorgePearse/mcp-tui-test/go/cmd/mcp-tui-test@latest
+```
+
+```json
+{
+  "mcpServers": {
+    "tui-test": { "command": "mcp-tui-test" }
+  }
+}
+```
+
+Built on the official [Go MCP SDK](https://github.com/modelcontextprotocol/go-sdk),
+`creack/pty`, and `vt10x` for buffer-mode screen emulation. The Python package
+remains the home of the pytest plugin; the two share the tool schema, so clients
+can't tell them apart.
+
 ## Structured results
 
 Every tool returns structured content (with an output schema), not prose: a
