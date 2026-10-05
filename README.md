@@ -43,21 +43,58 @@ An MCP (Model Context Protocol) server that enables AI assistants to test Termin
 - Python 3.10 or higher
 - [uv](https://docs.astral.sh/uv/)
 
-### Install Dependencies
+### Install
+
+Once published to PyPI, no install is needed — run it straight from `uvx`:
+
+```bash
+uvx mcp-tui-test
+```
+
+For development:
 
 ```bash
 uv venv
 source .venv/bin/activate
-uv pip install -r requirements.txt
+uv pip install -e ".[dev]"
 ```
 
-Or install the package:
+## Structured results
 
-```bash
-uv venv
-source .venv/bin/activate
-uv pip install -e .
+Every tool returns structured content (with an output schema), not prose: a
+`success` flag plus typed fields (`screen`, `outcome`, `passed`, `row`/`col`,
+`screen_excerpt` on failed assertions, `error` when something broke). Agents and
+scripts branch on fields instead of parsing ✓/✗ strings.
+
+The current screen is also exposed as an MCP **resource** at
+`tui://{session_id}/screen`.
+
+## Session limits & cleanup
+
+Sessions are capped and reaped automatically:
+
+- `MCP_TUI_MAX_SESSIONS` (default 8) — launching past the cap returns a structured error.
+- `MCP_TUI_SESSION_TTL_S` (default 900) — sessions older than this are closed on the next access.
+- Dead processes are reaped on every registry access and reported by `list_sessions`.
+- All sessions are force-closed (SIGKILL escalation) at interpreter exit — no zombies.
+
+## pytest plugin
+
+The same engine drives deterministic CI tests with no LLM in the loop. Installing
+the package registers a `tui` fixture:
+
+```python
+def test_app_header(tui):
+    s = tui.launch("my-app --demo", mode="buffer", dimensions=(120, 40))
+    s.wait_until_contains("Dashboard", timeout=10)
+    s.assert_at("Dashboard", 0, 2)
+    s.send("q")
 ```
+
+`TuiHandle` offers `send`, `send_ctrl`, `expect`, `assert_contains`, `assert_at`,
+`wait_until_contains`, `screen`, `line`, and `cursor`; failures raise
+`AssertionError` with the current screen attached. Sessions are closed at test
+teardown, pass or fail.
 
 ## Usage
 
@@ -81,23 +118,14 @@ Add this to your `claude_desktop_config.json`:
 {
   "mcpServers": {
     "tui-test": {
-      "command": "python",
-      "args": ["/path/to/mcp-tui-test/server.py"]
+      "command": "uvx",
+      "args": ["mcp-tui-test"]
     }
   }
 }
 ```
 
-Or if installed as a package:
-
-```json
-{
-  "mcpServers": {
-    "tui-test": {
-      "command": "mcp-tui-test"
-    }
-  }
-}
+(A local checkout also works: `"command": "python", "args": ["/path/to/mcp-tui-test/server.py"]`.)
 ```
 
 ## Available Tools

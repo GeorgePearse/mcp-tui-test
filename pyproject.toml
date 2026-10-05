@@ -1,22 +1,46 @@
 [build-system]
-requires = ["setuptools>=61.0"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [project]
 name = "mcp-tui-test"
-version = "0.2.0"
+version = "0.3.0"
 description = "MCP server for testing Terminal User Interfaces - like Playwright for TUI applications"
 readme = "README.md"
+license = { file = "LICENSE" }
 requires-python = ">=3.10"
-dependencies = [
-    "mcp>=1.0.0",
-    "pexpect>=4.9.0",
-    "pyte>=0.8.0"
+authors = [{ name = "George Pearse" }]
+keywords = ["mcp", "tui", "testing", "terminal", "pexpect", "pyte"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Framework :: Pytest",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Topic :: Software Development :: Testing",
+    "Topic :: Terminals",
 ]
+dependencies = [
+    "mcp>=1.10.0",
+    "pexpect>=4.9.0",
+    "pyte>=0.8.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
 
 [project.urls]
 Homepage = "https://github.com/GeorgePearse/mcp-tui-test"
 Repository = "https://github.com/GeorgePearse/mcp-tui-test"
+Documentation = "https://georgepearse.github.io/mcp-tui-test/"
 
 [project.scripts]
-mcp-tui-test = "server:mcp.run"
+mcp-tui-test = "mcp_tui_test.server:main"
+
+[project.entry-points.pytest11]
+mcp_tui_test = "mcp_tui_test.pytest_plugin"
+
+[tool.hatch.build.targets.wheel]
+packages = ["mcp_tui_test"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
