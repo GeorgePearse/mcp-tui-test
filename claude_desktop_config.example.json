@@ -1,9 +1,9 @@
 {
   "mcpServers": {
     "tui-test": {
-      "command": "python",
+      "command": "uvx",
       "args": [
-        "/absolute/path/to/mcp-tui-test/server.py"
+        "mcp-tui-test"
       ]
     }
   }

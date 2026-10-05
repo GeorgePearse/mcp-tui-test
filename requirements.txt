@@ -1,3 +1,4 @@
-mcp>=1.0.0
+# Kept for older setups; prefer `uv pip install -e .` (see pyproject.toml).
+mcp>=1.10.0
 pexpect>=4.9.0
 pyte>=0.8.0

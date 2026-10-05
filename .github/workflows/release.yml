@@ -1,0 +1,20 @@
+name: release
+
+# Publishes to PyPI via trusted publishing on every GitHub release.
+# One-time setup: add this repo as a trusted publisher for the `mcp-tui-test`
+# project at https://pypi.org/manage/account/publishing/ (workflow: release.yml).
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - run: uv build
+      - uses: pypa/gh-action-pypi-publish@release/v1
