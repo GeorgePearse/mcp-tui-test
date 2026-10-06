@@ -6,10 +6,12 @@ instead of parsing prose. The current screen is also exposed as an MCP resource 
 `tui://{session_id}/screen`.
 """
 
-from __future__ import annotations
-
 import pexpect
-from typing import Any, List, Optional, TypedDict
+from typing import Any, List, Optional
+
+# Pydantic requires the backport on Python < 3.12. Keep annotations evaluated
+# at runtime for FastMCP 1.10, which inspects them with issubclass().
+from typing_extensions import TypedDict
 
 try:  # mcp >= 2.0 renamed FastMCP to MCPServer
     from mcp.server.mcpserver import MCPServer as _Server

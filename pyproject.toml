@@ -23,10 +23,11 @@ dependencies = [
     "mcp>=1.10.0",
     "pexpect>=4.9.0",
     "pyte>=0.8.0",
+    "typing-extensions>=4.9",
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=8.0"]
+dev = ["pytest>=8.0", "jsonschema>=4.20"]
 
 [project.urls]
 Homepage = "https://github.com/GeorgePearse/mcp-tui-test"

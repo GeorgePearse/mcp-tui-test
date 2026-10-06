@@ -31,60 +31,60 @@ func envInt(name string, def int) int {
 // ---- result shapes (mirror mcp_tui_test/server.py TypedDicts) ----
 
 type LaunchResult struct {
-	Success   bool   `json:"success"`
-	SessionID string `json:"session_id"`
-	Command   string `json:"command"`
-	Width     int    `json:"width"`
-	Height    int    `json:"height"`
-	Mode      string `json:"mode"`
-	Error     string `json:"error,omitempty"`
+	Success   bool    `json:"success"`
+	SessionID string  `json:"session_id"`
+	Command   string  `json:"command"`
+	Width     int     `json:"width"`
+	Height    int     `json:"height"`
+	Mode      string  `json:"mode"`
+	Error     *string `json:"error"`
 }
 
 type ActionResult struct {
-	Success   bool   `json:"success"`
-	SessionID string `json:"session_id"`
-	Error     string `json:"error,omitempty"`
+	Success   bool    `json:"success"`
+	SessionID string  `json:"session_id"`
+	Error     *string `json:"error"`
 }
 
 type ScreenResult struct {
-	Success   bool   `json:"success"`
-	SessionID string `json:"session_id"`
-	Mode      string `json:"mode"`
-	Screen    string `json:"screen"`
-	Error     string `json:"error,omitempty"`
+	Success   bool    `json:"success"`
+	SessionID string  `json:"session_id"`
+	Mode      string  `json:"mode"`
+	Screen    string  `json:"screen"`
+	Error     *string `json:"error"`
 }
 
 type ExpectResult struct {
-	Success   bool   `json:"success"`
-	SessionID string `json:"session_id"`
-	Pattern   string `json:"pattern"`
-	Outcome   string `json:"outcome"` // found | timeout | eof | error
-	Error     string `json:"error,omitempty"`
+	Success   bool    `json:"success"`
+	SessionID string  `json:"session_id"`
+	Pattern   string  `json:"pattern"`
+	Outcome   string  `json:"outcome"` // found | timeout | eof | error
+	Error     *string `json:"error"`
 }
 
 type AssertResult struct {
-	Success       bool   `json:"success"`
-	Passed        bool   `json:"passed"`
-	SessionID     string `json:"session_id"`
-	Expected      string `json:"expected"`
-	Found         string `json:"found,omitempty"`
-	ScreenExcerpt string `json:"screen_excerpt,omitempty"`
-	Error         string `json:"error,omitempty"`
+	Success       bool    `json:"success"`
+	Passed        bool    `json:"passed"`
+	SessionID     string  `json:"session_id"`
+	Expected      string  `json:"expected"`
+	Found         *string `json:"found"`
+	ScreenExcerpt *string `json:"screen_excerpt"`
+	Error         *string `json:"error"`
 }
 
 type CursorResult struct {
-	Success   bool   `json:"success"`
-	SessionID string `json:"session_id"`
-	Row       int    `json:"row"`
-	Col       int    `json:"col"`
-	Error     string `json:"error,omitempty"`
+	Success   bool    `json:"success"`
+	SessionID string  `json:"session_id"`
+	Row       int     `json:"row"`
+	Col       int     `json:"col"`
+	Error     *string `json:"error"`
 }
 
 type RegionResult struct {
-	Success   bool   `json:"success"`
-	SessionID string `json:"session_id"`
-	Text      string `json:"text"`
-	Error     string `json:"error,omitempty"`
+	Success   bool    `json:"success"`
+	SessionID string  `json:"session_id"`
+	Text      string  `json:"text"`
+	Error     *string `json:"error"`
 }
 
 type SessionInfo struct {
@@ -173,7 +173,10 @@ func sid(s string) string {
 	return s
 }
 
-func noSession(id string) string { return fmt.Sprintf("no active session: %s", id) }
+func noSession(id string) *string { return stringPtr(fmt.Sprintf("no active session: %s", id)) }
+
+// A nil pointer encodes JSON null; an empty string remains a real observation.
+func stringPtr(s string) *string { return &s }
 
 // ---- handlers ----
 
@@ -189,7 +192,7 @@ func launchTUI(_ context.Context, _ *mcp.CallToolRequest, in LaunchIn) (*mcp.Cal
 	}
 	parts := strings.SplitN(strings.ToLower(dims), "x", 2)
 	fail := func(err string) (*mcp.CallToolResult, LaunchResult, error) {
-		return nil, LaunchResult{SessionID: id, Command: in.Command, Mode: mode, Error: err}, nil
+		return nil, LaunchResult{SessionID: id, Command: in.Command, Mode: mode, Error: stringPtr(err)}, nil
 	}
 	if len(parts) != 2 {
 		return fail(fmt.Sprintf("invalid dimensions %q", dims))
@@ -216,7 +219,7 @@ func sendKeys(_ context.Context, _ *mcp.CallToolRequest, in KeysIn) (*mcp.CallTo
 		keys = tui.DecodeKeys(keys)
 	}
 	if err := s.Send(keys); err != nil {
-		return nil, ActionResult{SessionID: id, Error: err.Error()}, nil
+		return nil, ActionResult{SessionID: id, Error: stringPtr(err.Error())}, nil
 	}
 	if in.Delay > 0.1 {
 		time.Sleep(time.Duration((in.Delay - 0.1) * float64(time.Second)))
@@ -231,14 +234,14 @@ func sendCtrl(_ context.Context, _ *mcp.CallToolRequest, in CtrlIn) (*mcp.CallTo
 		return nil, ActionResult{SessionID: id, Error: noSession(id)}, nil
 	}
 	if len(in.Key) != 1 {
-		return nil, ActionResult{SessionID: id, Error: fmt.Sprintf("key must be a single letter, got %q", in.Key)}, nil
+		return nil, ActionResult{SessionID: id, Error: stringPtr(fmt.Sprintf("key must be a single letter, got %q", in.Key))}, nil
 	}
 	c := strings.ToLower(in.Key)[0]
 	if c < 'a' || c > 'z' {
-		return nil, ActionResult{SessionID: id, Error: fmt.Sprintf("key must be a-z, got %q", in.Key)}, nil
+		return nil, ActionResult{SessionID: id, Error: stringPtr(fmt.Sprintf("key must be a-z, got %q", in.Key))}, nil
 	}
 	if err := s.Send(string(rune(c - 'a' + 1))); err != nil {
-		return nil, ActionResult{SessionID: id, Error: err.Error()}, nil
+		return nil, ActionResult{SessionID: id, Error: stringPtr(err.Error())}, nil
 	}
 	return nil, ActionResult{Success: true, SessionID: id}, nil
 }
@@ -256,7 +259,7 @@ func captureScreen(_ context.Context, _ *mcp.CallToolRequest, in CaptureIn) (*mc
 	if useBuffer && s.Mode == "buffer" {
 		out, err := s.BufferDisplay()
 		if err != nil {
-			return nil, ScreenResult{SessionID: id, Error: err.Error()}, nil
+			return nil, ScreenResult{SessionID: id, Error: stringPtr(err.Error())}, nil
 		}
 		return nil, ScreenResult{Success: true, SessionID: id, Mode: "buffer", Screen: out}, nil
 	}
@@ -275,7 +278,7 @@ func expectText(_ context.Context, _ *mcp.CallToolRequest, in ExpectIn) (*mcp.Ca
 	}
 	outcome, err := s.Expect(in.Pattern, time.Duration(timeout)*time.Second)
 	if err != nil {
-		return nil, ExpectResult{SessionID: id, Pattern: in.Pattern, Outcome: "error", Error: err.Error()}, nil
+		return nil, ExpectResult{SessionID: id, Pattern: in.Pattern, Outcome: "error", Error: stringPtr(err.Error())}, nil
 	}
 	return nil, ExpectResult{Success: outcome == "found", SessionID: id, Pattern: in.Pattern, Outcome: outcome}, nil
 }
@@ -294,19 +297,19 @@ func assertContains(_ context.Context, _ *mcp.CallToolRequest, in AssertIn) (*mc
 	if useBuffer && s.Mode == "buffer" {
 		var err error
 		if out, err = s.BufferDisplay(); err != nil {
-			return nil, AssertResult{SessionID: id, Expected: in.Text, Error: err.Error()}, nil
+			return nil, AssertResult{SessionID: id, Expected: in.Text, Error: stringPtr(err.Error())}, nil
 		}
 	} else {
 		out = s.StreamOutput(false)
 	}
 	res := AssertResult{Success: true, SessionID: id, Expected: in.Text, Passed: strings.Contains(out, in.Text)}
 	if res.Passed {
-		res.Found = in.Text
+		res.Found = stringPtr(in.Text)
 	} else {
 		if len(out) > 800 {
 			out = out[len(out)-800:]
 		}
-		res.ScreenExcerpt = out
+		res.ScreenExcerpt = stringPtr(out)
 	}
 	return nil, res, nil
 }
@@ -321,13 +324,13 @@ func assertAtPosition(_ context.Context, _ *mcp.CallToolRequest, in AssertPosIn)
 	for i := range []rune(in.Text) {
 		ch, err := s.CharAt(in.Row, in.Col+i)
 		if err != nil {
-			return nil, AssertResult{SessionID: id, Expected: in.Text, Error: err.Error()}, nil
+			return nil, AssertResult{SessionID: id, Expected: in.Text, Error: stringPtr(err.Error())}, nil
 		}
 		actual.WriteString(ch)
 	}
 	found := strings.TrimSpace(actual.String())
 	return nil, AssertResult{
-		Success: true, SessionID: id, Expected: in.Text, Found: found,
+		Success: true, SessionID: id, Expected: in.Text, Found: stringPtr(found),
 		Passed: found == strings.TrimSpace(in.Text),
 	}, nil
 }
@@ -340,7 +343,7 @@ func getCursorPosition(_ context.Context, _ *mcp.CallToolRequest, in SessionIn) 
 	}
 	row, col, err := s.CursorPos()
 	if err != nil {
-		return nil, CursorResult{SessionID: id, Row: -1, Col: -1, Error: err.Error()}, nil
+		return nil, CursorResult{SessionID: id, Row: -1, Col: -1, Error: stringPtr(err.Error())}, nil
 	}
 	return nil, CursorResult{Success: true, SessionID: id, Row: row, Col: col}, nil
 }
@@ -359,7 +362,7 @@ func getScreenRegion(_ context.Context, _ *mcp.CallToolRequest, in RegionIn) (*m
 	for row := in.RowStart; row < in.RowEnd; row++ {
 		line, err := s.Line(row)
 		if err != nil {
-			return nil, RegionResult{SessionID: id, Error: err.Error()}, nil
+			return nil, RegionResult{SessionID: id, Error: stringPtr(err.Error())}, nil
 		}
 		if in.ColStart < len(line) {
 			end := colEnd
@@ -383,7 +386,7 @@ func getLine(_ context.Context, _ *mcp.CallToolRequest, in LineIn) (*mcp.CallToo
 	}
 	line, err := s.Line(in.Row)
 	if err != nil {
-		return nil, RegionResult{SessionID: id, Error: err.Error()}, nil
+		return nil, RegionResult{SessionID: id, Error: stringPtr(err.Error())}, nil
 	}
 	return nil, RegionResult{Success: true, SessionID: id, Text: line}, nil
 }

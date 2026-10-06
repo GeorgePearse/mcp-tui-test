@@ -31,5 +31,6 @@ markdown_extensions:
 nav:
   - Home: index.md
   - Examples: examples.md
+  - Codemode: codemode.md
 
 copyright: Copyright &copy; 2025 MCP TUI Test Contributors

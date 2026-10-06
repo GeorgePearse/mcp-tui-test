@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+- Python 3.10 / MCP 1.10 startup now uses compatible runtime annotations and
+  `typing_extensions.TypedDict` for structured output schema generation.
+- Go structured results now always include nullable `error`, `found`, and
+  `screen_excerpt` fields, matching Python. Empty observations remain empty strings.
+  Clients that checked for missing fields should accept explicit `null` instead.
+
+### Added
+- MCP stdio contract tests shared by Python and Go, including schema validation.
+- A harness-side Codemode composition guide, with source attribution and session
+  ordering, cleanup, and execution-boundary guidance.
+
 ## [0.2.0] - 2025-01-11
 
 ### Added

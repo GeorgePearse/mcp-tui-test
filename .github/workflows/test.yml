@@ -11,13 +11,19 @@ jobs:
     strategy:
       matrix:
         python-version: ["3.10", "3.13"]
+        include:
+          - python-version: "3.10"
+            mcp-version: "1.10.0"
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v5
         with:
           python-version: ${{ matrix.python-version }}
-      - run: uv venv && uv pip install -e ".[dev]"
-      - run: uv run pytest -v
+      # setup-uv creates and activates .venv when python-version is supplied.
+      - run: uv pip install -e ".[dev]"
+      - if: matrix.mcp-version
+        run: uv pip install "mcp==${{ matrix.mcp-version }}"
+      - run: uv run --no-sync pytest -v
 
   test-go:
     runs-on: ubuntu-latest
@@ -25,6 +31,16 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v5
         with:
-          go-version: "1.23"
+          go-version-file: go/go.mod
           cache-dependency-path: go/go.sum
       - run: cd go && go vet ./... && go test ./...
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.13"
+      # setup-uv creates and activates .venv when python-version is supplied.
+      - run: uv pip install -e ".[dev]"
+      - run: cd go && go build -o "$RUNNER_TEMP/mcp-tui-test" ./cmd/mcp-tui-test
+      - name: Check Python and Go MCP wire contracts
+        run: uv run --no-sync pytest tests/test_protocol.py -v
+        env:
+          MCP_TUI_TEST_BINARY: ${{ runner.temp }}/mcp-tui-test
