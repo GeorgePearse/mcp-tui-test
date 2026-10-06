@@ -28,18 +28,18 @@ jobs:
 
       - run: echo "cache_id=$(date --utc '+%V')" >> $GITHUB_ENV
 
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         with:
-          key: mkdocs-cinder-${{ env.cache_id }}
+          key: mkdocs-material-${{ env.cache_id }}
           path: .cache
           restore-keys: |
-            mkdocs-cinder-
+            mkdocs-material-
 
       - name: Install MkDocs and dependencies
         run: pip install -r docs-requirements.txt
 
       - name: Build documentation
-        run: mkdocs build
+        run: mkdocs build --strict
 
       - name: Deploy to GitHub Pages
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'

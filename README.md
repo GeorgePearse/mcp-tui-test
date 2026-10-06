@@ -413,3 +413,19 @@ MIT License - see LICENSE file for details
 ## Author
 
 Created for testing TUI applications with AI assistance.
+
+## Documentation development
+
+The site uses Material for MkDocs, matching [VisionChain](https://github.com/GeorgePearse/VisionChain/blob/main/mkdocs.yml)
+and [Bayesian Filters](https://github.com/GeorgePearse/bayesian_filters/blob/master/mkdocs.yml).
+
+```bash
+uv venv .venv-docs
+uv pip install --python .venv-docs/bin/python -r docs-requirements.txt
+.venv-docs/bin/mkdocs serve
+.venv-docs/bin/mkdocs build --strict
+```
+
+For a build you can open directly from disk with local search, use
+`MKDOCS_OFFLINE=true .venv-docs/bin/mkdocs build --strict --site-dir /tmp/mcp-tui-test-offline`.
+Offline builds use `.html` page URLs; normal builds retain the published directory URLs.

@@ -45,3 +45,6 @@ htmlcov/
 # MkDocs
 site/
 .cache/
+
+# Isolated documentation tooling
+.venv-docs/
