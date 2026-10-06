@@ -41,7 +41,7 @@ func TestLaunchExpectCaptureFlow(t *testing.T) {
 func TestMissingSessionStructuredError(t *testing.T) {
 	withRegistry(t)
 	_, res, _ := sendKeys(context.Background(), nil, KeysIn{Keys: "x", SessionID: "nope"})
-	if res.Success || !strings.Contains(res.Error, "no active session") {
+	if res.Success || res.Error == nil || !strings.Contains(*res.Error, "no active session") {
 		t.Fatalf("want structured error, got %+v", res)
 	}
 }
@@ -52,7 +52,7 @@ func TestAssertContainsExcerptOnFailure(t *testing.T) {
 	launchTUI(ctx, nil, LaunchIn{Command: `echo alpha beta; read x`, SessionID: "t2"})
 	expectText(ctx, nil, ExpectIn{Pattern: "beta", SessionID: "t2", Timeout: 5})
 	_, res, _ := assertContains(ctx, nil, AssertIn{Text: "gamma", SessionID: "t2"})
-	if !res.Success || res.Passed || res.ScreenExcerpt == "" {
+	if !res.Success || res.Passed || res.ScreenExcerpt == nil || *res.ScreenExcerpt == "" {
 		t.Fatalf("want failed assert with excerpt, got %+v", res)
 	}
 }

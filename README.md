@@ -92,6 +92,9 @@ scripts branch on fields instead of parsing ✓/✗ strings.
 The current screen is also exposed as an MCP **resource** at
 `tui://{session_id}/screen`.
 
+For harness-side loops, result handling, and session ordering, see
+[Composing TUI tests in a coding harness](docs/codemode.md).
+
 ## Session limits & cleanup
 
 Sessions are capped and reaped automatically:
