@@ -1,0 +1,2093 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Like Playwright, but for Terminal User Interfaces">
+      
+      
+        <meta name="author" content="MCP TUI Test Contributors">
+      
+      
+        <link rel="canonical" href="https://georgepearse.github.io/mcp-tui-test/landscape/">
+      
+      
+        <link rel="prev" href="../codemode/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>Landscape - MCP TUI Test</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#tui-testing-landscape" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="MCP TUI Test" class="md-header__button md-logo" aria-label="MCP TUI Test" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            MCP TUI Test
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Landscape
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/GeorgePearse/mcp-tui-test" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GeorgePearse/mcp-tui-test
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../examples/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Examples
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../codemode/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Codemode
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Landscape
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="MCP TUI Test" class="md-nav__button md-logo" aria-label="MCP TUI Test" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    MCP TUI Test
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/GeorgePearse/mcp-tui-test" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GeorgePearse/mcp-tui-test
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../codemode/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Codemode
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Landscape
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Landscape
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-mcp-tui-test-fits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How mcp-tui-test fits
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tools
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tools">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#microsofttui-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        microsoft/tui-test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#antithesishqbombadil" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        antithesishq/bombadil
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#montanaflynnheadless-terminal-ht" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        montanaflynn/headless-terminal (ht)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#beorntermless" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        beorn/termless
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vyncinttermlens" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        vyncint/termlens
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mwunschtermscope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        mwunsch/termscope
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fcourytermwright" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        fcoury/termwright
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#charmbraceletvhs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        charmbracelet/vhs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#charmbracelet-xexpteatest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        charmbracelet x/exp/teatest
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ratatui-testbackend-with-insta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ratatui TestBackend with insta
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#textual-pilot-and-pytest-textual-snapshot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Textual Pilot and pytest-textual-snapshot
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pexpect-expect-pyte-libvterm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pexpect / expect, pyte, libvterm
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#testty" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        testty
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hegner123tui-test-ghost-and-mjpowersjrvterm-mcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        hegner123/tui-test-ghost and mjpowersjr/vterm-mcp
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#libghostty-vt-and-go-libghostty" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        libghostty-vt and go-libghostty
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#synthesis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Synthesis
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ideas-mcp-tui-test-could-adopt-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ideas mcp-tui-test could adopt next
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-mcp-tui-test-fits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How mcp-tui-test fits
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tools
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tools">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#microsofttui-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        microsoft/tui-test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#antithesishqbombadil" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        antithesishq/bombadil
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#montanaflynnheadless-terminal-ht" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        montanaflynn/headless-terminal (ht)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#beorntermless" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        beorn/termless
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vyncinttermlens" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        vyncint/termlens
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mwunschtermscope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        mwunsch/termscope
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fcourytermwright" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        fcoury/termwright
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#charmbraceletvhs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        charmbracelet/vhs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#charmbracelet-xexpteatest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        charmbracelet x/exp/teatest
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ratatui-testbackend-with-insta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ratatui TestBackend with insta
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#textual-pilot-and-pytest-textual-snapshot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Textual Pilot and pytest-textual-snapshot
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pexpect-expect-pyte-libvterm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pexpect / expect, pyte, libvterm
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#testty" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        testty
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hegner123tui-test-ghost-and-mjpowersjrvterm-mcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        hegner123/tui-test-ghost and mjpowersjr/vterm-mcp
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#libghostty-vt-and-go-libghostty" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        libghostty-vt and go-libghostty
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#synthesis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Synthesis
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ideas-mcp-tui-test-could-adopt-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ideas mcp-tui-test could adopt next
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="tui-testing-landscape">TUI-testing landscape<a class="headerlink" href="#tui-testing-landscape" title="Permanent link">&para;</a></h1>
+<p>Other tools that drive or snapshot terminal programs, what each one is built
+on, and the ideas in each that are worth isolating. Repository facts (stars,
+last push, language, dependencies) were read from the repositories themselves
+on 2026-10-26. Where a line says <em>mcp-tui-test:</em> it describes what this project
+does today; see the <a href="#synthesis">synthesis</a> for the aggregate view.</p>
+<h2 id="how-mcp-tui-test-fits">How mcp-tui-test fits<a class="headerlink" href="#how-mcp-tui-test-fits" title="Permanent link">&para;</a></h2>
+<p>mcp-tui-test spawns the program under test in a real PTY (pexpect in Python,
+<code>creack/pty</code> in Go) and optionally feeds its output through a VT emulator
+(pyte in Python, <code>vt10x</code> in Go) to get a screen grid. It exposes that as MCP
+tools with structured results, as a <code>tui://{session_id}/screen</code> resource, and
+as a pytest fixture. It has text and regex waits, substring and position
+assertions, region and line reads, cursor position, and session caps and
+reaping. It has no idle or stable-screen wait, no style or colour reads, no
+mouse or resize, no screenshots or recordings, no snapshot comparison, and no
+scrollback.</p>
+<h2 id="tools">Tools<a class="headerlink" href="#tools" title="Permanent link">&para;</a></h2>
+<h3 id="microsofttui-test">microsoft/tui-test<a class="headerlink" href="#microsofttui-test" title="Permanent link">&para;</a></h3>
+<p><a href="https://github.com/microsoft/tui-test">github.com/microsoft/tui-test</a>
+(formerly <code>microsoft/shell-use</code>; the old URL redirects) · Rust · 295 stars ·
+pushed 2026-10-23.</p>
+<ul>
+<li><strong>Approach</strong>: real PTY on Windows, Linux and macOS, with a selectable
+  emulator backend: Alacritty (default), Ghostty, Rio or xterm.js. One engine
+  behind a CLI and in-process Rust, Python, JavaScript and Go libraries.</li>
+<li><strong>Assertions and snapshots</strong>: Playwright-style text locators
+  (<code>find</code>/<code>expect</code>/<code>click</code>/<code>highlight text</code>) with regex, whitespace, style
+  (<code>--fg</code>, <code>--bold</code>, …), OSC 8 link and before/after-anchor filters; <code>expect
+  snapshot NAME</code>; waits on idle, title, clipboard, bell, command, exit and
+  shell readiness; <code>cells X Y W H</code> returns styled cells.</li>
+<li><strong>Capture</strong>: SVG and PNG screenshots; APNG, GIF, MP4 and asciinema
+  recordings; on-failure traces (<code>trace.md</code>, <code>trace.json</code>, <code>timeline.json</code>,
+  <code>trace.html</code>).</li>
+<li><strong>Agent integration</strong>: <code>agent-context</code> prints the command schema as JSON,
+  <code>skill --add</code> installs an agent skill, <code>--json</code> everywhere, and a session
+  daemon so each CLI call is one step.</li>
+</ul>
+<p>Core ideas:</p>
+<ol>
+<li><strong>Locators over the screen grid instead of byte-stream matching.</strong> A locator
+   is a query (text, regex, style, link, anchor) that resolves to cell spans
+   and is retried until it passes. <em>mcp-tui-test:</em> has <code>assert_contains</code> and
+   <code>assert_at_position</code>, but no query that returns match coordinates and no
+   style or anchor filters.</li>
+<li><strong>One engine, many front ends.</strong> The CLI and four language bindings share
+   one native core, so a test written for an agent and a test in a <code>cargo
+   test</code> behave identically. <em>mcp-tui-test:</em> has the same shape in miniature
+   (MCP server and pytest fixture share <code>core.py</code>), but Python and Go are
+   separate implementations that share only the tool schema.</li>
+<li><strong>Failure artefacts for agents first.</strong> A failed assertion writes
+   structured artefacts, and the docs tell agents to read <code>trace.md</code> and the
+   JSON rather than the HTML. <em>mcp-tui-test:</em> attaches <code>screen_excerpt</code> to a
+   failed assertion and nothing else.</li>
+<li><strong>Swappable real emulators.</strong> Backends are real terminal cores, so a test
+   can be run against the emulator a user actually has. <em>mcp-tui-test:</em> one
+   fixed emulator per language.</li>
+</ol>
+<h3 id="antithesishqbombadil">antithesishq/bombadil<a class="headerlink" href="#antithesishqbombadil" title="Permanent link">&para;</a></h3>
+<p><a href="https://github.com/antithesishq/bombadil">github.com/antithesishq/bombadil</a> ·
+Rust · 1,564 stars · pushed 2026-10-23 ·
+<a href="https://antithesishq.github.io/bombadil/">manual</a>.</p>
+<ul>
+<li><strong>Approach</strong>: property-based testing of web and terminal UIs. Terminal mode
+  runs the program on a real PTY (<code>portable-pty</code>) and parses its output with
+  <code>libghostty-vt</code>. The loop is: extract state, check every property, pick the
+  next action from the current state, perform it, wait for the next chunk of
+  output or a timeout, repeat.</li>
+<li><strong>Assertions</strong>: properties are TypeScript modules using temporal operators
+  (<code>always</code>, <code>eventually</code>, <code>next</code>, <code>now</code>, <code>implies</code>) over a sequence of states.
+  Terminal defaults include <code>exitSuccess</code> and <code>noReplacementChars</code>; the default
+  action generator types Unicode input and escape sequences. <code>bombadil terminal
+  shrink</code> reduces a violating trace to a shorter one (marked experimental).</li>
+<li><strong>Results</strong>: Oskar Wickström's
+  <a href="https://wickstrom.tech/2026-04-30-bombadil-terminal-experiment.html">2026-04-30 write-up</a>
+  reports a freeze in vitetris, two btop bugs (one already fixed in 1.4.6, one
+  newly reported) and an rlwrap segfault from a few days of random input,
+  scrolling and resizing at roughly 300 captured states per second.</li>
+<li><strong>Agent integration</strong>: none; it is a CI and local tool with a GitHub Action.</li>
+</ul>
+<p>Core ideas:</p>
+<ol>
+<li><strong>Property-based exploration instead of scripted examples.</strong> Random,
+   state-aware action generation reaches sequences nobody scripted.
+   <em>mcp-tui-test:</em> every action is chosen by the caller.</li>
+<li><strong>Temporal properties over a state sequence.</strong> Invariants are checked after
+   every step, not at one chosen moment. <em>mcp-tui-test:</em> single-moment
+   assertions only.</li>
+<li><strong>Shrinking a violating trace.</strong> A long random trace is reduced to a minimal
+   reproduction. <em>mcp-tui-test:</em> no trace recording, so nothing to shrink.</li>
+<li><strong>Default properties that need no spec.</strong> "Exits zero" and "never prints a
+   byte the terminal can't render" catch real bugs with zero configuration.
+   <em>mcp-tui-test:</em> no built-in invariants.</li>
+</ol>
+<h3 id="montanaflynnheadless-terminal-ht">montanaflynn/headless-terminal (<code>ht</code>)<a class="headerlink" href="#montanaflynnheadless-terminal-ht" title="Permanent link">&para;</a></h3>
+<p><a href="https://github.com/montanaflynn/headless-terminal">github.com/montanaflynn/headless-terminal</a>
+· Go · 121 stars · pushed 2026-08-31.</p>
+<ul>
+<li><strong>Approach</strong>: a Unix-socket daemon owns one PTY per session and feeds output
+  through <code>libghostty-vt</code> (statically linked via cgo); the <code>ht</code> CLI talks JSON
+  lines to it. Vim-style key notation (<code>&lt;CR&gt;</code>, <code>&lt;Esc&gt;</code>, <code>&lt;C-c&gt;</code>).</li>
+<li><strong>Assertions and snapshots</strong>: <code>ht view</code> in plain, ANSI, HTML, PNG or JSON;
+  <code>ht wait</code> on text, cursor, idle, change or exit; asciicast recording via
+  <code>ht record</code>; <code>ht watch</code> streams a session live to another pane.</li>
+<li><strong>Agent integration</strong>: an Anthropic-format skill in
+  <code>skills/headless-terminal/</code> that teaches the key notation and a
+  "wait-strategy decision tree (the part agents get wrong)".</li>
+</ul>
+<p>Core ideas:</p>
+<ol>
+<li><strong>Send synchronisation as a first-class concept.</strong> Default 20 ms keystroke
+   pacing, plus <code>--wait-text</code>, <code>--wait-cursor</code>, <code>--wait-idle</code>, <code>--wait-change</code>
+   and <code>--wait-exit</code> that compose with AND on the same <code>send</code>. <em>mcp-tui-test:</em>
+   <code>send_keys</code> sleeps a fixed <code>delay</code> (default 0.1 s); waiting is a separate
+   <code>expect_text</code> call and only on text.</li>
+<li><strong>Daemon-owned sessions, thin CLI.</strong> Sessions outlive any one command, so
+   an agent issues one shell command per step. <em>mcp-tui-test:</em> equivalent via
+   the MCP server process holding sessions.</li>
+<li><strong>Shoulder-surfing.</strong> <code>ht watch</code> lets a human see live what the agent is
+   driving. <em>mcp-tui-test:</em> no live view.</li>
+<li><strong>Skill as the integration surface.</strong> Instead of an MCP server, a
+   <code>SKILL.md</code> that teaches an agent when and how to call the CLI.
+   <em>mcp-tui-test:</em> MCP tools only; no skill file.</li>
+</ol>
+<h3 id="beorntermless">beorn/termless<a class="headerlink" href="#beorntermless" title="Permanent link">&para;</a></h3>
+<p><a href="https://github.com/beorn/termless">github.com/beorn/termless</a> · TypeScript
+(Bun and Node) · 36 stars · pushed 2026-10-24.</p>
+<ul>
+<li><strong>Approach</strong>: a <code>TerminalBackend</code> interface with twelve implementations:
+  xterm.js (default), Ghostty via WASM, Ghostty native, Alacritty, WezTerm,
+  vt100 (TypeScript), vt100 (Rust), vt220, vterm.js, libvterm, Kitty and
+  Peekaboo (drives a real macOS terminal through accessibility APIs). Tests can
+  <code>feed()</code> bytes with no process, or <code>spawn()</code> a real PTY (Bun native, or
+  <code>node-pty</code> on Node).</li>
+<li><strong>Assertions and snapshots</strong>: region selectors (<code>screen</code>, <code>scrollback</code>,
+  <code>buffer</code>, <code>viewport</code>, <code>row(n)</code>, <code>cell(r, c)</code>, <code>range</code>) and 21+ Vitest
+  matchers for text, cell style, cursor, mode, title, scrollback and
+  <code>toMatchTerminalSnapshot()</code>; <code>term.out</code> matches raw protocol bytes that
+  render nothing (Kitty graphics, OSC 52). SVG and PNG screenshots;
+  recordings in a <code>.tty</code>/<code>.ttyz</code> journal format with codecs to asciicast,
+  <code>.tape</code> and ttyrec.</li>
+<li><strong>Agent integration</strong>: <code>@termless/cli</code> ships <code>termless record</code>, <code>termless
+  play</code> and an MCP server.</li>
+</ul>
+<p>Core ideas:</p>
+<ol>
+<li><strong>Multi-backend conformance.</strong> The same test runs against every emulator,
+   and a differential corpus mined from the emulators' own test suites grades
+   backends against each other. <em>mcp-tui-test:</em> pyte and vt10x are
+   implementation details, not selectable, and never compared.</li>
+<li><strong>Three inlets, one path.</strong> <code>feed()</code>, <code>spawn()</code> and a replayed recording all
+   arrive at the backend as ordered byte writes, so an assertion written
+   against a live process runs unchanged against a stored journal.
+   <em>mcp-tui-test:</em> live PTY only.</li>
+<li><strong>Region selectors separate "where" from "what".</strong> <code>expect(term.row(0))</code>
+   and <code>expect(term.cell(0, 8)).toHaveFg(…)</code> compose a location with a matcher.
+   <em>mcp-tui-test:</em> <code>get_screen_region</code> and <code>get_line</code> return text; there is no
+   cell-level style view.</li>
+<li><strong>Raw-output assertions for invisible protocol.</strong> Some behaviour changes no
+   cell, so the byte stream stays inspectable next to the grid.
+   <em>mcp-tui-test:</em> stream mode exposes the stream with ANSI optionally
+   retained, but not alongside a grid in the same session.</li>
+</ol>
+<h3 id="vyncinttermlens">vyncint/termlens<a class="headerlink" href="#vyncinttermlens" title="Permanent link">&para;</a></h3>
+<p><a href="https://github.com/vyncint/termlens">github.com/vyncint/termlens</a> · Rust ·
+27 stars · pushed 2026-10-23 · recommended in ratatui's
+<a href="https://ratatui.rs/recipes/testing/snapshots/">snapshot-testing recipe</a> as
+the PTY layer to pair with <code>TestBackend</code>.</p>
+<ul>
+<li><strong>Approach</strong>: real PTY, <code>vt100</code> crate behind an internal trait (with a
+  second parser recovering blink, conceal and strikethrough, which <code>vt100</code>
+  drops). A reader thread drains the PTY continuously and answers the queries a
+  real terminal would answer (cursor position, DA, <code>DECRQM</code>, <code>XTGETTCAP</code>,
+  background colour), so capability-probing apps do not hang. Every <code>Screen</code>
+  is an immutable snapshot taken under one lock. Windows via ConPTY.</li>
+<li><strong>Assertions and snapshots</strong>: <code>wait_until(pred)</code>, <code>wait_frame(pred)</code> for
+  complete DEC 2026 synchronized frames, <code>snapshot_after(pred)</code>,
+  <code>wait_stable</code>, <code>wait_idle</code>, <code>wait_exit</code>; <code>assert_screen_snapshot!</code> via
+  insta; <code>mask_matching</code>, <code>mask_rect</code> and <code>mask_matches</code> blank volatile cells
+  on the grid without shifting columns; <code>Screen::diff</code> reports cell-by-cell
+  changes; <code>Screen::parse</code> reads a printed snapshot back in. Mode-aware
+  input: mouse, paste and keys are encoded for the modes the app enabled.
+  <code>graphics()</code> captures Kitty and sixel transmissions. A <code>termlens</code> CLI does
+  <code>inspect</code>, <code>diff</code> and <code>render --svg</code>.</li>
+<li><strong>Agent integration</strong>: none beyond the CLI and JSON output
+  (<code>serde</code> feature).</li>
+</ul>
+<p>Core ideas:</p>
+<ol>
+<li><strong>Wait on a predicate over the screen, not on text.</strong> Every wait takes a
+   closure over the full <code>Screen</code> (cells, styles, cursor, modes, counters) and
+   is deadline-bounded with the screen attached on timeout; there is no
+   <code>sleep</code>. <em>mcp-tui-test:</em> <code>expect_text</code> waits on a regex over the stream;
+   the pytest plugin's <code>wait_until_contains</code> polls the buffer text.</li>
+<li><strong>Frame-complete snapshots.</strong> <code>wait_frame</code> returns only complete DEC 2026
+   frames, so a snapshot is never torn mid-repaint; <code>snapshot_after</code> waits for
+   the predicate and then for stillness. <em>mcp-tui-test:</em> <code>capture_screen</code>
+   reads whatever has arrived.</li>
+<li><strong>Mask the grid, not the text.</strong> Volatile content is replaced cell-for-cell
+   so layout and styles still compare. <em>mcp-tui-test:</em> no snapshot
+   comparison.</li>
+<li><strong>Answer the terminal's questions.</strong> Replying to capability probes is what
+   lets real apps run under a fake terminal. <em>mcp-tui-test:</em> pexpect and pyte
+   do not answer <code>CSI 6n</code> or DA requests; apps that wait for a reply stall
+   until their own timeout.</li>
+</ol>
+<h3 id="mwunschtermscope">mwunsch/termscope<a class="headerlink" href="#mwunschtermscope" title="Permanent link">&para;</a></h3>
+<p><a href="https://github.com/mwunsch/termscope">github.com/mwunsch/termscope</a> · Zig ·
+19 stars · pushed 2026-04-08.</p>
+<ul>
+<li><strong>Approach</strong>: single static binary on <code>libghostty-vt</code>. <code>termscope snapshot
+  -- cmd</code> for one-shot capture, <code>termscope exec</code> with <code>--wait-for-text</code>,
+  <code>--type</code>, <code>--press</code>, <code>--wait-idle</code>, <code>--expect</code> for scripted runs, and
+  <code>termscope session</code> as a JSON-lines request/response protocol over
+  stdin/stdout. Emacs-style key notation (<code>C-c</code>, <code>M-x</code>, <code>RET</code>).</li>
+<li><strong>Assertions and snapshots</strong>: <code>--expect TEXT</code> sets the exit code; output as
+  numbered text ("optimized for LLMs"), style spans, JSON, HTML or SVG;
+  <code>query</code> returns cursor, style, title and alt-screen state.</li>
+<li><strong>Agent integration</strong>: <code>npx skills add mwunsch/termscope</code>.</li>
+</ul>
+<p>Core ideas:</p>
+<ol>
+<li><strong>JSON-lines session protocol on stdio.</strong> A TUI driver that any harness can
+   speak without an SDK or a daemon socket. <em>mcp-tui-test:</em> MCP over stdio
+   plays the same role with a schema.</li>
+<li><strong>Numbered-line text format for models.</strong> Row numbers in the text output
+   so an agent can refer to a line without counting. <em>mcp-tui-test:</em>
+   <code>get_line(row)</code> exists but <code>capture_screen</code> returns unnumbered text.</li>
+<li><strong>Exit-code assertions for CI.</strong> <code>exec --expect</code> makes a one-liner a test.
+   <em>mcp-tui-test:</em> assertion results are structured fields, not an exit code,
+   because the caller is an MCP client.</li>
+</ol>
+<h3 id="fcourytermwright">fcoury/termwright<a class="headerlink" href="#fcourytermwright" title="Permanent link">&para;</a></h3>
+<p><a href="https://github.com/fcoury/termwright">github.com/fcoury/termwright</a> · Rust ·
+23 stars · pushed 2026-02-10.</p>
+<ul>
+<li><strong>Approach</strong>: <code>portable-pty</code> and the <code>vt100</code> crate, async (tokio). Library,
+  CLI (<code>run</code>, <code>screenshot</code>, <code>run-steps</code> for YAML/JSON step files) and a
+  <code>daemon</code> mode exposing a JSON-RPC Unix socket. Emulates replies to OSC
+  10/11/12 colour queries and <code>CSI 6n</code> cursor-position requests.</li>
+<li><strong>Assertions and snapshots</strong>: wait for text, regex, screen stability
+  (<code>wait_for_idle</code>) or exit; screen as text or JSON with colours, cursor and
+  cell attributes; PNG screenshots rendered with system fonts; box detection
+  that finds UI boundaries from box-drawing characters.</li>
+<li><strong>Agent integration</strong>: JSON screen output described as "for AI agents"; no
+  MCP server or skill.</li>
+</ul>
+<p>Core ideas:</p>
+<ol>
+<li><strong>Box detection.</strong> Deriving panel and dialog boundaries from box-drawing
+   characters gives a semantic region without the app's cooperation.
+   <em>mcp-tui-test:</em> regions are caller-specified coordinates.</li>
+<li><strong>Declarative step files.</strong> A YAML or JSON scenario replaces a program for
+   simple E2E flows. <em>mcp-tui-test:</em> no scenario format; the harness scripts
+   calls.</li>
+<li><strong>Shell-scriptable daemon.</strong> <code>socat</code> plus <code>jq</code> is enough to write tests.
+   <em>mcp-tui-test:</em> needs an MCP client.</li>
+</ol>
+<h3 id="charmbraceletvhs">charmbracelet/vhs<a class="headerlink" href="#charmbraceletvhs" title="Permanent link">&para;</a></h3>
+<p><a href="https://github.com/charmbracelet/vhs">github.com/charmbracelet/vhs</a> · Go ·
+21,201 stars · pushed 2026-10-01.</p>
+<ul>
+<li><strong>Approach</strong>: a <code>.tape</code> DSL (<code>Type</code>, <code>Enter</code>, <code>Sleep</code>, <code>Wait /regex/</code>,
+  <code>Set</code>, <code>Require</code>, <code>Hide</code>/<code>Show</code>, <code>Screenshot</code>, <code>Source</code>, <code>Env</code>) executed
+  against <code>ttyd</code> serving xterm.js in a headless Chromium driven by <code>rod</code>;
+  frames are assembled by <code>ffmpeg</code>. <code>vhs record</code> writes a tape from a live
+  session.</li>
+<li><strong>Assertions and snapshots</strong>: <code>Output golden.ascii</code> or <code>.txt</code> writes a text
+  rendering for golden-file diffs in git; <code>Wait[+Screen][+Line] /regex/</code> is
+  the only synchronisation primitive. GIF, MP4, WebM and PNG frame outputs.</li>
+<li><strong>Agent integration</strong>: none built in. Agents use it to produce a GIF or
+  <code>.ascii</code> they can read; testty compiles its scenarios to tapes for the same
+  reason.</li>
+</ul>
+<p>Core ideas:</p>
+<ol>
+<li><strong>Tape DSL compiled to recordings.</strong> One short script yields a
+   reproducible demo and a golden text file. <em>mcp-tui-test:</em> no DSL and no
+   recording.</li>
+<li><strong>Golden text outputs from the same run as the video.</strong> The <code>.ascii</code>
+   render is the test; the GIF is the documentation. <em>mcp-tui-test:</em> no
+   golden files.</li>
+<li><strong>A real browser-hosted emulator.</strong> Rendering through xterm.js in Chromium
+   makes the picture match what a web-embedded terminal shows, at the cost of
+   heavy dependencies. <em>mcp-tui-test:</em> lightweight emulator, no pixels.</li>
+</ol>
+<h3 id="charmbracelet-xexpteatest">charmbracelet <code>x/exp/teatest</code><a class="headerlink" href="#charmbracelet-xexpteatest" title="Permanent link">&para;</a></h3>
+<p><a href="https://github.com/charmbracelet/x">github.com/charmbracelet/x</a> (package
+<code>exp/teatest</code>, with a <code>v2</code> for Bubble Tea v2) · Go.</p>
+<ul>
+<li><strong>Approach</strong>: in-process. <code>NewTestModel</code> runs a <code>tea.Model</code> with a fake
+  terminal size; <code>Send(tea.Msg)</code> injects messages; <code>WaitFor(reader, cond)</code>
+  polls the output reader; <code>FinalModel</code> and <code>FinalOutput</code> wait for the
+  program to quit.</li>
+<li><strong>Assertions and snapshots</strong>: <code>RequireEqualOutput</code> compares the final output
+  bytes with a golden file in <code>testdata/</code>, updated with <code>-update</code>, diffed with
+  the system <code>diff</code>.</li>
+<li><strong>Agent integration</strong>: none.</li>
+</ul>
+<p>Core ideas:</p>
+<ol>
+<li><strong>Golden output of the final frame.</strong> A single byte-exact file per test.
+   <em>mcp-tui-test:</em> none.</li>
+<li><strong>Inject messages, not keystrokes.</strong> Tests speak the framework's own event
+   type, skipping the terminal. <em>mcp-tui-test:</em> always keystrokes through a
+   PTY, which is what you want when the app is a black box.</li>
+</ol>
+<h3 id="ratatui-testbackend-with-insta">ratatui <code>TestBackend</code> with insta<a class="headerlink" href="#ratatui-testbackend-with-insta" title="Permanent link">&para;</a></h3>
+<p><a href="https://ratatui.rs/recipes/testing/snapshots/">ratatui.rs/recipes/testing/snapshots</a>
+· Rust.</p>
+<ul>
+<li><strong>Approach</strong>: in-process. <code>Terminal::new(TestBackend::new(80, 20))</code>, draw
+  the widget, <code>assert_snapshot!(terminal.backend())</code>. Snapshots are text,
+  one row per line; colour is not included (ratatui issue #1402 is open for
+  that). The recipe then points to termlens for the layers <code>TestBackend</code>
+  cannot see: the event loop, raw mode, alternate screen, exit codes.</li>
+<li><strong>Agent integration</strong>: none.</li>
+</ul>
+<p>Core ideas:</p>
+<ol>
+<li><strong>In-process buffer snapshots with a review workflow.</strong> <code>cargo insta
+   review</code> makes accepting intentional changes cheap. <em>mcp-tui-test:</em> none.</li>
+<li><strong>Two layers, explicitly.</strong> Widget tests in-process, a few flows through a
+   PTY. <em>mcp-tui-test:</em> is the second layer only.</li>
+</ol>
+<h3 id="textual-pilot-and-pytest-textual-snapshot">Textual Pilot and pytest-textual-snapshot<a class="headerlink" href="#textual-pilot-and-pytest-textual-snapshot" title="Permanent link">&para;</a></h3>
+<p><a href="https://textual.textualize.io/guide/testing/">Textual testing guide</a> and
+<a href="https://github.com/Textualize/pytest-textual-snapshot">github.com/Textualize/pytest-textual-snapshot</a>
+· Python · 52 stars · pushed 2025-04-26.</p>
+<ul>
+<li><strong>Approach</strong>: in-process. <code>App.run_test()</code> runs the app headless and yields
+  a <code>Pilot</code> with <code>press</code>, <code>click</code> (by CSS selector or offset, with modifiers
+  and click counts), <code>hover</code> and <code>pause</code>; <code>size</code> is set on <code>run_test</code>.</li>
+<li><strong>Assertions and snapshots</strong>: plain <code>assert</code> against widget state;
+  <code>snap_compare(app, press=[…], run_before=…, terminal_size=…)</code> renders an
+  SVG screenshot and compares it with the stored one; an HTML report shows
+  the diff; <code>--snapshot-update</code> accepts changes.</li>
+<li><strong>Agent integration</strong>: none.</li>
+</ul>
+<p>Core ideas:</p>
+<ol>
+<li><strong>Selector-addressed interaction.</strong> <code>pilot.click("#number-5")</code> targets a
+   widget, not a coordinate. Needs the framework's cooperation.
+   <em>mcp-tui-test:</em> coordinates and text only.</li>
+<li><strong>SVG screenshot as the snapshot artefact.</strong> Diffable in a browser, styles
+   included. <em>mcp-tui-test:</em> none.</li>
+</ol>
+<h3 id="pexpect-expect-pyte-libvterm">pexpect / expect, pyte, libvterm<a class="headerlink" href="#pexpect-expect-pyte-libvterm" title="Permanent link">&para;</a></h3>
+<p><a href="https://pexpect.readthedocs.io/">pexpect</a>,
+<a href="https://core.tcl-lang.org/expect/index">expect</a>, <a href="https://pyte.readthedocs.io/">pyte</a>,
+<a href="https://www.leonerd.org.uk/code/libvterm/">libvterm</a>.</p>
+<ul>
+<li><strong>Approach</strong>: pexpect and expect spawn a PTY and match the byte stream
+  against patterns; pyte (Python) and libvterm (C, used by Neovim) are VT
+  emulators that turn that stream into a grid. mcp-tui-test's Python
+  implementation is pexpect plus pyte.</li>
+<li><strong>Assertions</strong>: <code>expect(pattern)</code> with a timeout; pyte exposes
+  <code>screen.display</code>, <code>screen.buffer[row][col]</code> with styles, and cursor;
+  <code>HistoryScreen</code> adds scrollback.</li>
+<li><strong>Agent integration</strong>: none.</li>
+</ul>
+<p>Core ideas:</p>
+<ol>
+<li><strong>Stream matching for sequential programs.</strong> Cheap and exact when the
+   program prints lines. <em>mcp-tui-test:</em> stream mode.</li>
+<li><strong>Separate the PTY from the emulator.</strong> Any stream can be fed to any
+   emulator. <em>mcp-tui-test:</em> same split (<code>ScreenSession</code> owns both).</li>
+</ol>
+<h3 id="testty">testty<a class="headerlink" href="#testty" title="Permanent link">&para;</a></h3>
+<p><a href="https://docs.rs/testty">docs.rs/testty</a>, source in
+<a href="https://github.com/agentty-xyz/agentty">github.com/agentty-xyz/agentty</a>
+(<code>crates/testty</code>) · Rust. The <code>testty</code> crate exists on crates.io (0.18.1 as
+of 2026-10-21); it is published from the agentty monorepo, and the latest
+crate-level description there is agentty's rather than testty's.</p>
+<ul>
+<li><strong>Approach</strong>: real PTY (<code>portable-pty</code>) with the <code>vt100</code> crate.
+  <code>Scenario</code> builder (<code>wait_for_stable_frame</code>, <code>press_key</code>, <code>write_text</code>,
+  <code>eventually</code>, <code>capture</code>) run against a <code>PtySessionBuilder</code>; a <code>testty run
+  scenario.yaml</code> CLI for non-Rust projects. Answers DA1 so capability probes
+  return immediately.</li>
+<li><strong>Assertions and snapshots</strong>: <code>match_text_in_region</code>, recipes such as
+  <code>expect_selected_tab</code> that read highlight styles; text or pixel baselines;
+  "proof" reports as text, screenshot, GIF, HTML or JUnit XML. Feature GIFs
+  are produced by compiling the same steps to a VHS <code>.tape</code>, hash-cached on
+  the PTY frames and rendering settings so they re-record only when the UI
+  changed.</li>
+<li><strong>Agent integration</strong>: none specific.</li>
+</ul>
+<p>Core ideas:</p>
+<ol>
+<li><strong>Semantic recipes over styles.</strong> "Selected tab" is defined by highlight
+   attributes, not by text. <em>mcp-tui-test:</em> no style access.</li>
+<li><strong>Compile scenarios to VHS tapes.</strong> The test and the demo recording are the
+   same steps. <em>mcp-tui-test:</em> none.</li>
+<li><strong>Hash-cached recordings.</strong> Re-render only when the frames changed.
+   <em>mcp-tui-test:</em> none.</li>
+</ol>
+<h3 id="hegner123tui-test-ghost-and-mjpowersjrvterm-mcp">hegner123/tui-test-ghost and mjpowersjr/vterm-mcp<a class="headerlink" href="#hegner123tui-test-ghost-and-mjpowersjrvterm-mcp" title="Permanent link">&para;</a></h3>
+<p><a href="https://github.com/hegner123/tui-test-ghost">github.com/hegner123/tui-test-ghost</a>
+· Zig · 2 stars · pushed 2026-05-16.
+<a href="https://github.com/mjpowersjr/vterm-mcp">github.com/mjpowersjr/vterm-mcp</a>
+· Rust · 3 stars · pushed 2026-04-15.</p>
+<p>Both exist. Both are MCP servers over a real PTY and <code>libghostty-vt</code>, so they
+are the closest in shape to mcp-tui-test.</p>
+<ul>
+<li><strong>tui-test-ghost</strong> tools: <code>tui_start</code>, <code>tui_send</code> (key tokens such as
+  <code>down*3</code>, with <code>settle_ms</code>), <code>tui_screen</code>, <code>tui_cell</code> (char, bold, italic,
+  underline, strikethrough, dim, fg, bg), <code>tui_wait</code> (text, <code>stable_ms</code>, or
+  cursor position), <code>tui_resize</code>, <code>tui_snapshot</code> (<code>golden_path</code> compares or
+  creates a baseline), <code>tui_stop</code>, <code>tui_record_start</code>/<code>stop</code> to a JSONL file,
+  and <code>tui-test-ghost replay test.jsonl</code> that re-executes action tools and
+  compares assertion tools' recorded results. Every tool accepts a <code>region</code>.</li>
+<li><strong>vterm-mcp</strong> tools: <code>start_session</code>, <code>stop_session</code>, <code>list_sessions</code>,
+  <code>get_screen</code> (text, cursor, optional per-cell styles), <code>send_keys</code> (named
+  keys with <code>C-</code>, <code>M-</code>, <code>S-</code> prefixes), <code>wait_for_text</code> (substring or regex).</li>
+</ul>
+<p>Core ideas:</p>
+<ol>
+<li><strong>Record the MCP session, replay it as a test.</strong> The agent's exploratory
+   calls become a JSONL file; replay re-runs the actions and checks the
+   recorded assertion results, turning an interactive session into a
+   regression test. <em>mcp-tui-test:</em> no recording.</li>
+<li><strong>Region parameter on every read.</strong> Any tool can scope itself to a
+   sub-rectangle, so screen text sent to the model stays small.
+   <em>mcp-tui-test:</em> only <code>get_screen_region</code>.</li>
+<li><strong>Golden snapshot as a tool.</strong> <code>tui_snapshot</code> with a path compares or
+   creates the baseline from inside the agent loop. <em>mcp-tui-test:</em> none.</li>
+<li><strong>Settle time on send.</strong> <code>settle_ms</code> and <code>stable_ms</code> wait for the screen
+   to stop changing. <em>mcp-tui-test:</em> fixed <code>delay</code>.</li>
+</ol>
+<h3 id="libghostty-vt-and-go-libghostty">libghostty-vt and go-libghostty<a class="headerlink" href="#libghostty-vt-and-go-libghostty" title="Permanent link">&para;</a></h3>
+<p><a href="https://mitchellh.com/writing/libghostty-is-coming">mitchellh.com/writing/libghostty-is-coming</a>
+(2025-09-22) and
+<a href="https://github.com/mitchellh/go-libghostty">github.com/mitchellh/go-libghostty</a>
+· Go bindings · 155 stars · pushed 2026-10-21 (a mirror; source of truth is
+on tangled.org).</p>
+<p>libghostty-vt is "a zero-dependency library that provides an API for parsing
+terminal sequences and maintaining terminal state", extracted from Ghostty.
+It is the emulator under bombadil, <code>ht</code>, termscope, tui-test-ghost, vterm-mcp
+and one of the backends of microsoft/tui-test and termless. go-libghostty is
+a cgo binding that statically links it; its example feeds bytes to a
+<code>Terminal</code> and formats the grid as plain text with a <code>Formatter</code>.</p>
+<p>Mitchell Hashimoto did not build a TUI test framework. On 2026-04-30 he
+<a href="https://x.com/mitchellh/status/2049851176988914071">wrote</a>:</p>
+<blockquote>
+<p>Libghostty can now be used to fuzz TUIs, thanks to @owickstrom +
+@AntithesisHQ. They already found bugs in multiple including btop. I always
+imagined libghostty would be useful for testing TUIs, super happy to see
+this is both practical and valuable.</p>
+<p>This is another example of where speed matters! "Why does Ghostty need to
+be so fast?" Well, if you're running hundreds or thousands of unit tests
+that each use a clean in-memory terminal, you want that to be fast. If
+you're fuzz testing and trying to push an unlimited amount of data through
+a terminal, you want that terminal to be fast.</p>
+</blockquote>
+<p>Core ideas:</p>
+<ol>
+<li><strong>A production emulator as a library.</strong> The grid a test asserts on is the
+   same code a real terminal renders, so emulator bugs are not the test's
+   bugs. <em>mcp-tui-test:</em> pyte and vt10x are small independent emulators.</li>
+<li><strong>Throughput as a testing feature.</strong> Fast parsing is what makes thousands
+   of in-memory terminals per test run and fuzzing at hundreds of states per
+   second practical. <em>mcp-tui-test:</em> one session per PTY, speed not a goal.</li>
+</ol>
+<h2 id="synthesis">Synthesis<a class="headerlink" href="#synthesis" title="Permanent link">&para;</a></h2>
+<p>Idea by tool. A filled cell means the tool has the idea as a documented
+feature. The last column is mcp-tui-test today.</p>
+<table>
+<thead>
+<tr>
+<th>Idea</th>
+<th style="text-align: center;">tui-test</th>
+<th style="text-align: center;">bombadil</th>
+<th style="text-align: center;">ht</th>
+<th style="text-align: center;">termless</th>
+<th style="text-align: center;">termlens</th>
+<th style="text-align: center;">termscope</th>
+<th style="text-align: center;">termwright</th>
+<th style="text-align: center;">vhs</th>
+<th style="text-align: center;">teatest</th>
+<th style="text-align: center;">ratatui</th>
+<th style="text-align: center;">Textual</th>
+<th style="text-align: center;">testty</th>
+<th style="text-align: center;">ghost / vterm-mcp</th>
+<th style="text-align: center;">mcp-tui-test</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Real PTY</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+</tr>
+<tr>
+<td>Production emulator (Ghostty, Alacritty, xterm.js, …)</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td>Multi-backend conformance</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td>Wait for idle / stable screen</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td>Wait on predicate over full screen state</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td>Frame-complete (DEC 2026) snapshots</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td>Locators returning match coordinates</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td>Cell styles and colours readable</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td>Region-scoped reads</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+</tr>
+<tr>
+<td>Semantic regions (box detection, tab recipes)</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td>Golden / snapshot comparison</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td>Grid masking of volatile cells</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td>SVG / PNG screenshots</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td>Recording (asciicast, GIF, tape)</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td>Replay a recording through the same assertions</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td>Tape / scenario DSL</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td>Answers terminal capability queries</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td>Mouse input</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td>Resize / SIGWINCH</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td>Scrollback</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td>Property-based exploration with shrinking</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td>Temporal properties over a trace</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td>Structured (JSON) results</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+</tr>
+<tr>
+<td>Failure artefacts beyond the message</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">partial</td>
+</tr>
+<tr>
+<td>MCP server</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+</tr>
+<tr>
+<td>Agent skill file</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td>Session daemon or server</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+</tr>
+<tr>
+<td>Live human view of the session</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td>In-process framework hooks</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<p>"partial" for mcp-tui-test: failed assertions carry <code>screen_excerpt</code>; there
+are no traces, screenshots or recordings.</p>
+<h2 id="ideas-mcp-tui-test-could-adopt-next">Ideas mcp-tui-test could adopt next<a class="headerlink" href="#ideas-mcp-tui-test-could-adopt-next" title="Permanent link">&para;</a></h2>
+<p>Ordered by payoff for an agent-driven TUI test server, highest first. This is
+a list, not a plan; none of it is implemented.</p>
+<ol>
+<li><strong>Wait for a stable screen.</strong> A <code>wait_stable(quiet_ms)</code> tool (termlens,
+   <code>ht --wait-idle</code>, tui-test-ghost <code>stable_ms</code>) replaces the fixed
+   <code>delay</code> on <code>send_keys</code> and the guesswork before <code>capture_screen</code>. It is the
+   single most common cause of flaky agent runs and costs one loop over the
+   buffer.</li>
+<li><strong>Find text, return coordinates.</strong> A <code>find_text(pattern)</code> returning row and
+   column spans (tui-test's locators, termlens's <code>find_all</code>) turns
+   <code>assert_at_position</code> from "the caller guesses the position" into "the
+   caller asserts what it found".</li>
+<li><strong>Expose cell styles.</strong> pyte and vt10x both carry fg, bg, bold and reverse
+   per cell; a <code>get_cell(row, col)</code> or a styled <code>capture_screen</code> lets an agent
+   verify a selected item or an error colour (termless, tui-test-ghost
+   <code>tui_cell</code>, testty's recipes).</li>
+<li><strong>Record the tool calls, replay as a test.</strong> tui-test-ghost's JSONL
+   recording and replay converts an agent's exploratory session into a
+   deterministic pytest case with no extra authoring. The pytest plugin
+   already has the engine for the replay side.</li>
+<li><strong>Golden screen snapshots with grid masking.</strong> A <code>snapshot(name)</code> that
+   compares the buffer text to a stored file, with termlens-style cell masks
+   for clocks and PIDs, gives the pytest plugin a regression story and the
+   MCP server a one-call assertion.</li>
+<li><strong>Answer capability queries.</strong> Replying to <code>CSI 6n</code>, DA1 and <code>DECRQM</code>
+   (termlens, termwright, testty) stops capability-probing apps from stalling
+   on launch. Small code, removes a class of mysterious timeouts.</li>
+<li><strong>Region on every read.</strong> A <code>region</code> parameter on <code>capture_screen</code> and the
+   assertions (tui-test-ghost) keeps screen text sent to the model small
+   without a second call.</li>
+<li><strong>Resize.</strong> <code>resize(cols, rows)</code> with <code>SIGWINCH</code> (most tools) tests the
+   layout path that in-process frameworks cannot reach.</li>
+<li><strong>Default invariants.</strong> Bombadil's zero-config properties, "exited zero" and
+   "never printed a replacement character", are cheap checks the registry
+   could report on every <code>close_session</code>.</li>
+<li><strong>An agent skill file.</strong> A <code>SKILL.md</code> describing when to use which mode and
+    how to wait (the part <code>ht</code> says agents get wrong) complements the MCP
+    schema for clients that load skills.</li>
+<li><strong>Screenshots.</strong> SVG rendering of the buffer (termscope, termlens) gives a
+    human a picture of what the agent saw. Useful, but the text grid already
+    serves the model.</li>
+<li><strong>Property-based exploration.</strong> Random action generation over the existing
+    tools is possible from the harness side today; shrinking and temporal
+    properties are Bombadil's whole product and out of scope for this server.</li>
+</ol>
+
+
+
+
+
+
+
+  
+    
+  
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="October 26, 2026 00:55:14 UTC">October 26, 2026</span>
+  </span>
+
+    
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2025 MCP TUI Test Contributors
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "toc.follow", "search.suggest", "search.highlight", "content.code.copy"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+    
+  </body>
+</html>
