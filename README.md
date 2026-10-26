@@ -403,12 +403,28 @@ Contributions are welcome! Please feel free to submit issues or pull requests.
 
 MIT License - see LICENSE file for details
 
-## Related Projects
+## Related tools
 
-- [Playwright](https://playwright.dev/) - Browser automation (inspiration for this project)
-- [pexpect](https://pexpect.readthedocs.io/) - Python module for spawning child applications
-- [pyte](https://pyte.readthedocs.io/) - Python terminal emulator
-- [MCP](https://modelcontextprotocol.io/) - Model Context Protocol specification
+[docs/landscape.md](docs/landscape.md) surveys the other TUI-testing tools,
+what each is built on, the core ideas in each, and which of those ideas this
+project has or could adopt. The tools covered:
+
+- [microsoft/tui-test](https://github.com/microsoft/tui-test) — Rust engine with Alacritty, Ghostty, Rio and xterm.js backends; Playwright-style locators; CLI plus Rust, Python, JS and Go bindings
+- [antithesishq/bombadil](https://github.com/antithesishq/bombadil) — property-based exploration of web and terminal UIs on `portable-pty` and `libghostty-vt`, with temporal properties and trace shrinking
+- [montanaflynn/headless-terminal](https://github.com/montanaflynn/headless-terminal) (`ht`) — Go daemon on `libghostty-vt`; composable `--wait-*` flags on `send`; agent skill
+- [beorn/termless](https://github.com/beorn/termless) — TypeScript; twelve emulator backends with a conformance corpus; recordings replayed through the same assertions; MCP server
+- [vyncint/termlens](https://github.com/vyncint/termlens) — Rust; predicate waits, DEC 2026 frame-complete snapshots, grid masking, answers terminal capability queries
+- [mwunsch/termscope](https://github.com/mwunsch/termscope) — Zig single binary on `libghostty-vt`; JSON-lines session protocol
+- [fcoury/termwright](https://github.com/fcoury/termwright) — Rust; daemon over a Unix socket, YAML step files, box detection
+- [charmbracelet/vhs](https://github.com/charmbracelet/vhs) — tape DSL to GIF/MP4 plus `.ascii` golden files
+- [charmbracelet/x `exp/teatest`](https://github.com/charmbracelet/x), [ratatui `TestBackend`](https://ratatui.rs/recipes/testing/snapshots/), [Textual Pilot](https://textual.textualize.io/guide/testing/) and [pytest-textual-snapshot](https://github.com/Textualize/pytest-textual-snapshot) — in-process framework test hooks with golden or SVG snapshots
+- [testty](https://docs.rs/testty) — Rust; semantic recipes over styles, scenarios compiled to VHS tapes
+- [hegner123/tui-test-ghost](https://github.com/hegner123/tui-test-ghost) and [mjpowersjr/vterm-mcp](https://github.com/mjpowersjr/vterm-mcp) — MCP servers on `libghostty-vt`, the closest in shape to this project; tui-test-ghost records tool calls to JSONL and replays them as tests
+- [libghostty-vt](https://mitchellh.com/writing/libghostty-is-coming) and [go-libghostty](https://github.com/mitchellh/go-libghostty) — the headless VT engine most of the above sit on
+- [pexpect](https://pexpect.readthedocs.io/), [pyte](https://pyte.readthedocs.io/), [libvterm](https://www.leonerd.org.uk/code/libvterm/) — PTY stream matching and VT emulation; this project's Python implementation is pexpect plus pyte
+
+Also: [Playwright](https://playwright.dev/) (the inspiration for this project)
+and the [MCP specification](https://modelcontextprotocol.io/).
 
 ## Author
 

@@ -60,5 +60,6 @@ nav:
   - Home: index.md
   - Examples: examples.md
   - Codemode: codemode.md
+  - Landscape: landscape.md
 
 copyright: Copyright &copy; 2025 MCP TUI Test Contributors
