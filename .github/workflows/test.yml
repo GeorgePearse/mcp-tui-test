@@ -21,8 +21,11 @@ jobs:
           python-version: ${{ matrix.python-version }}
       # setup-uv creates and activates .venv when python-version is supplied.
       - run: uv pip install -e ".[dev]"
+      # mcp 1.10.0 imports pydantic._internal._typing_extra.eval_type_backport,
+      # which pydantic 2.14.0 (2026-10-08) removed; the floor only resolves on
+      # older pydantic.
       - if: matrix.mcp-version
-        run: uv pip install "mcp==${{ matrix.mcp-version }}"
+        run: uv pip install "mcp==${{ matrix.mcp-version }}" "pydantic<2.14"
       - run: uv run --no-sync pytest -v
 
   test-go:
